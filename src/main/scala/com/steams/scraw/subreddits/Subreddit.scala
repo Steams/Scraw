@@ -1,9 +1,9 @@
-package scraw.subreddits
+package com.steams.scraw.subreddits
 
-import scraw.utils.apiObjects.{BaseObject}
-import scraw.{RedditInstance}
-import scraw.http.Endpoint
-import scraw.posts.PostListingBuilder
+import com.steams.scraw.utils.apiObjects.{BaseObject}
+import com.steams.scraw.reddit.Reddit
+import com.steams.scraw.http.Endpoint
+import com.steams.scraw.posts.PostListingBuilder
 
 case class Subreddit (
     override val id : String,
@@ -32,13 +32,13 @@ case class Subreddit (
     val user_is_subscriber : Boolean
   ) extends BaseObject(id,name) {
 
-  var instance : Option[RedditInstance] = None
+  var instance : Option[Reddit] = None
 
   def hot() : PostListingBuilder = {
     return PostListingBuilder(Endpoint("subreddit_listing",display_name),instance.get)
   }
 
-  def setInstance(reddit : RedditInstance) = {
+  def setInstance(reddit : Reddit) = {
     instance = Some(reddit)
   }
 
@@ -46,7 +46,7 @@ case class Subreddit (
 
 object Subreddit {
 
-  def apply(name : String)(implicit reddit : RedditInstance ) : Subreddit = {
+  def apply(name : String)(implicit reddit : Reddit ) : Subreddit = {
     val sub = SubredditService.getSubreddit(name, reddit)
     sub.setInstance(reddit)
     return sub

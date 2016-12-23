@@ -1,11 +1,11 @@
-package scraw.http
+package com.steams.scraw.http
 
 import scala.util.Try
 
 import net.liftweb.json._
-import scalaj.http.{Http,Base64}
+import scalaj.http.{Base64, Http}
 
-import scraw.utils.HandleJson
+import com.steams.scraw.utils.HandleJson
 
 
 object OauthService extends HandleJson {

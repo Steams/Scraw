@@ -1,4 +1,4 @@
-package scraw.http
+package com.steams.scraw.http
 
 object Endpoint {
 

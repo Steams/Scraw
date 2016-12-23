@@ -1,11 +1,6 @@
-package scraw
+package com.steams.scraw
 
 import pureconfig.loadConfig
-
-import scraw.subreddits.Subreddit
-import scraw.users.User
-import scraw.utils.InstanceConfig
-
 
 object scrawbot{
 
@@ -13,14 +8,15 @@ object scrawbot{
 
     val config : InstanceConfig = loadConfig[InstanceConfig]("bot").get
 
-    implicit val instance : RedditInstance = RedditInstance(config)
+    implicit val instance : Reddit = reddit.Reddit(config)
 
     println("Your user name is : " + instance.owner.name)
 
     val cscq = Subreddit("cscareerquestions")
     println(cscq.title)
 
-    val cscq_listing = cscq.hot().limit(5).get
+    val cscq_listing = cscq.hot().limit(5)
+    //this should implicitly convert from PostListingBuilder to PostListing
     println(cscq_listing.children.size)
 
 

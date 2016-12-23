@@ -1,7 +1,7 @@
-package scraw.users
+package com.steams.scraw.users
 
-import scraw.utils.apiObjects.{BaseObject,Created}
-import scraw.RedditInstance
+import com.steams.scraw.utils.apiObjects.{BaseObject,Created}
+import com.steams.scraw.reddit.Reddit
 
 case class User (
     override val id : String,
@@ -22,7 +22,7 @@ case class User (
 
 object User {
 
-  def apply(name : String)(implicit reddit : RedditInstance ) : User = {
+  def apply(name : String)(implicit reddit : Reddit ) : User = {
     UsersService.getUser(name,reddit)
   }
 

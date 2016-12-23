@@ -1,4 +1,4 @@
-package scraw
+package com.steams.scraw
 
 import net.liftweb.json.DefaultFormats
 

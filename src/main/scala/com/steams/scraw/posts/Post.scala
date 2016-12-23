@@ -1,12 +1,14 @@
-package  scraw.posts
+package  com.steams.scraw.posts
 
 import scala.collection.mutable.Map
 
-import scraw.utils.apiObjects.{BaseObject,Listing}
-import scraw.subreddits.SubredditService
-import scraw.RedditInstance
+import com.steams.scraw.utils.apiObjects.{BaseObject}
+import com.steams.scraw.subreddits.SubredditService
+import com.steams.scraw.reddit.Reddit
 
-case class Post(val kind:String, val data:PostData)
+
+
+case class Post(val kind:String, val data:PostData){}
 
 case class PostData(
   override val id : String,
@@ -43,6 +45,8 @@ case class PostData(
 
 }
 
+
+//rename to post stream
 case class PostListing(
   val modhash: String,
   val children: List[Post],
@@ -50,10 +54,13 @@ case class PostListing(
   val before: String
 ) extends Iterable[Post] {
 
+  // lazy val posts = children
+
   def iterator = children.iterator
 }
 
-case class PostListingBuilder(val endpoint : String, val reddit : RedditInstance ) {
+//rename to postStreamSlice
+case class PostListingBuilder(val endpoint : String, val reddit : Reddit ) {
 
   val params : Map[String,Option[String]] = Map(
     "before" -> None,

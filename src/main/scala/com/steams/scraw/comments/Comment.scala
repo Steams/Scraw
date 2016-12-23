@@ -1,6 +1,6 @@
-package scraw.comments
+package com.steams.scraw.comments
 
-import scraw.utils.apiObjects.{BaseObject}
+import com.steams.scraw.utils.apiObjects.BaseObject
 
 case class Comment (
   override val id : String,

@@ -1,4 +1,4 @@
-package scraw.http
+package com.steams.scraw.http
 
 import scalaj.http.Http
 
