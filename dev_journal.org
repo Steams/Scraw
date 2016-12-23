@@ -1,0 +1,12 @@
+* Day 1 - Sunday Dec 18,2016
+** Determined the different functionality the lib should expose 
+based on the praw docs and what functionality existing bots use
+** Determiend the different functional systems in the lib
+* Day 2 - Monday Dec 19,2016
+** Decided to design the library (or a subset of it) to a decent extent first before coding
+* Day 3 - Tuesday Dec 20,2016
+** dug into the source code for JRAW to see how it handles authentication
+in order to figure out a way around the problem i was having with scalaj-http authenticating with oauth
+** tracked down http://snacktrace.com/artifacts/com.squareup.okhttp3/okhttp/3.1.2/okhttp3.Credentials
+that credentials functions which shed a ton of light on what gets passed in the header for an oath request.
+Turns out its just a base64 encoded version of the clientid and secret concatenated

@@ -1,0 +1,104 @@
+* Core features
+** Authenticate with reddit 
+*** Accept User Agent and Client Id & Client Secret
+*** authenticate with username and password
+*** Can configure with initializer or builder or configure function
+*** keyword arguments in the initializer
+** Obtain subreddit instance
+** Access stream of posts for a subreddit
+*** functional stream api
+*** sort controvertial, hot etc...
+*** lazy initalize lists, dont connect to network until the user asks for the actual data
+** Obtain subreddit instance
+*** obtain post by id or
+** Access stream comments for a post
+*** functional stream api
+*** filter by regex
+*** sort by best, controversial etc
+*** iterate through top level comments
+*** itterate through flattened list form
+*** NB *read about how praw and jraw handle itterating through comment forrests*
+** Access stream of comments for entire subreddit, sort by most recent
+** Post comment
+** Read only and authenticated instances
+*** can switch modes whenever
+** Obtain redditor instance
+*** obtain from multiple sources
+**** .author on submission
+**** by name
+** Monitor rate limit headers
+X-Ratelimit-Used: Approximate number of requests used in this period
+X-Ratelimit-Remaining: Approximate number of requests left to use
+X-Ratelimit-Reset: Approximate number of seconds to end of period
+
+* System functionality
+** parse json to scala objects
+** make api calls to reddit with/without object/json payload
+** expose useful/functionaly customizable api/objects to library users 
+
+* Feature Ideas
+** comment filter pipeline
+*** can pass in a regex to filter for comments matching
+** Handling exeptions in a functional way
+** Allow user to use there own http library for requests
+
+* Todo
+** NB *read about how praw and jraw handle itterating through comment forrests*
+
+* Deployment/Publication features
+** available in maven, importable with gradle/sbt
+** github wiki/ info and docs page
+
+* feature priority
+** Authenticate
+** get subreddit/posts
+** login
+
+* Client info
+** client id : m_E8pjI3qXrCuA
+** secret : 	Z12Pm6DicM66dXZpYvyDlHjDCtA
+** name : scrawbot
+** username : scraw_tester_bot
+** password : scrawpw
+
+* Feature implementations
+** Authenticate with reddit
+*** Requires
+**** http client
+**** api client id/secret
+**** user agent string
+** Login to reddit
+
+* Library design
+** Authentication
+*** handle auth with client id/secret, username/password, useragent string
+**** send request and store token
+*** Scraw.getInstance(client_id,client_secret,user_agent)
+**** 
+*** RedditInstance.login(username,password)
+**** 
+*** RedditInstance.currentUser
+**** 
+*** RedditInstance.currentUser
+**** 
+*** ideas
+**** methods script/application that returns a different instance based on the differences between scripts and apps
+apps need an access_token scripts dont
+
+** Subreddits
+*** Subreddit("cscareerquestions", implicit instance : RedditInstance) use implicit
+**** object containing subreddit meta data and methods to access streams of posts
+**** cscareerquestions :Subreddit = Subreddit("cscareerquestions")
+**** cscareerquestions = "cscareerquestions".asSubreddit  : can do this using implicits if u want (bad idea probably)
+*** sub.hot/rising/new/... : streams of posts, lazy loaded when accesed
+*** sub.top("week"/"alltime")
+**** for(post <- cscareerquestions.hot()){yield post.title}
+**** for(post <- Subreddit("all").filter("pizza_gate")){yield post.title}
+overload filter function to provide one that takes a subreddit name as a string
+*** sub.comments(limit=25)
+stream of the most recent comments
+*** 
+** Posts
+** Comments
+** Users
+
