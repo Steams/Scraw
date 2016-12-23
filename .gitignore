@@ -17,9 +17,10 @@ src/main/scala-2.11/
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+.idea/
 
 # ENSIME specific
 .ensime_cache/
 .ensime
 
-.org
+*.org

@@ -18,8 +18,11 @@ object scrawbot{
     println("Your user name is : " + instance.owner.name)
 
     val cscq = Subreddit("cscareerquestions")
-
     println(cscq.title)
+
+    val cscq_listing = cscq.hot().limit(5).get
+    println(cscq_listing.children.size)
+
 
     val user = User("lordtuts")
 
