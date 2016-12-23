@@ -1,7 +1,7 @@
 package com.steams
 
 import scala.language.implicitConversions
-import com.steams.scraw.posts.{PostListing, PostListingBuilder}
+import com.steams.scraw.posts.{PostStream, PostStreamSlice}
 
 package object scraw {
 
@@ -18,6 +18,6 @@ package object scraw {
   val User = com.steams.scraw.users.User
 
 
-  implicit def PostListingBuilderToPostListing( slice : PostListingBuilder ) : PostListing =  slice.get()
+  implicit def PostListingBuilderToPostListing( slice : PostStreamSlice ) : PostStream =  slice.get()
 
 }

@@ -7,6 +7,12 @@ object Endpoint {
     "me" -> ((_:String) => "https://oauth.reddit.com/api/v1/me"),
     "about_subreddit" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/about"),
     "subreddit_listing" -> ((name : String) => "https://oauth.reddit.com/r/"+name),
+    "subreddit_listing_hot" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/hot"),
+    "subreddit_listing_top" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/top"),
+    "subreddit_listing_new" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/new"),
+    "subreddit_listing_random" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/random"),
+    "subreddit_listing_rising" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/rising"),
+    "subreddit_listing_controversial" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/controvertial"),
     "about_user" -> ((name : String) => "https://oauth.reddit.com/user/"+name+"/about")
   )
 
