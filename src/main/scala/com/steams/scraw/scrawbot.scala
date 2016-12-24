@@ -15,20 +15,20 @@ object scrawbot{
     val cscq = Subreddit("cscareerquestions")
     println(cscq.title)
 
-    val cscq_listing = cscq.hot().limit(5)
+    // val cscq_listing = cscq.hot().limit(5)
     //this should implicitly convert from PostListingBuilder to PostListing
     // println(cscq_listing.children.size)
+
     val poe = Subreddit("pathofexile")
 
     val posts = poe.top().time("all").limit(2)
 
     for(x <- posts){
-      println(x.data.url + " : Score : " + x.data.score)
+      println(x.url + " : Score : " + x.score)
     }
 
 
     val user = User("lordtuts")
-
     println(user.name + "'s link karma is : " + user.link_karma)
 
   }

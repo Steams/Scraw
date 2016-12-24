@@ -1,6 +1,7 @@
 package com.steams.scraw
 
-import net.liftweb.json.DefaultFormats
+import net.liftweb.json._
+import net.liftweb.json.JsonAST.{JValue}
 
 package utils {
 
@@ -14,6 +15,7 @@ package utils {
 
   trait HandleJson {
     implicit val formats = DefaultFormats
+    implicit def JvalToString( x:JValue) : String = x.extractOrElse[String]("")
   }
 
 }

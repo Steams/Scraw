@@ -5,7 +5,7 @@ import net.liftweb.json._
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.utils.HandleJson
 import com.steams.scraw.http.{Endpoint,HttpService}
-import com.steams.scraw.posts.PostStream
+import com.steams.scraw.posts.{PostStream,Post}
 
 
 object SubredditService extends HandleJson {
@@ -17,10 +17,14 @@ object SubredditService extends HandleJson {
     return parse(response_body).\("data").extract[Subreddit]
   }
 
-  def getListing(endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : PostStream = {
+  def getStream(endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : PostStream = {
 
     val response_body = HttpService.get(endpoint,reddit.access_token,params)
 
-    return parse(response_body).\("data").extract[PostStream]
+    val jval = parse(response_body)
+
+    val posts = for(post <- (jval \ "data" \ "children").children) yield {(post \ "data").extract[Post]}
+
+    return PostStream((jval \ "data" \ "modhash"), (jval \ "data" \ "after"), (jval \ "data" \ "before"), posts)
   }
 }

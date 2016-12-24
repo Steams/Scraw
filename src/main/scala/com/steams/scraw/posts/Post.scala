@@ -3,9 +3,7 @@ package  com.steams.scraw.posts
 import com.steams.scraw.utils.apiObjects.{BaseObject}
 
 
-case class Post(val kind:String, val data:PostData){}
-
-case class PostData(
+case class Post(
   override val id : String,
   override val name : String,
   val author : String,

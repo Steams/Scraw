@@ -10,14 +10,14 @@ import com.steams.scraw.subreddits.SubredditService
 
 case class PostStream(
                        val modhash: String,
-                       val children: List[Post],
                        val after: String,
-                       val before: String
+                       val before: String,
+                       val posts: List[Post]
                      ) extends Iterable[Post] {
 
   // lazy val posts = children
 
-  def iterator = children.iterator
+  def iterator = posts.iterator
 }
 
 case class PostStreamSlice(val endpoint : String, val reddit : Reddit ) {
@@ -32,7 +32,7 @@ case class PostStreamSlice(val endpoint : String, val reddit : Reddit ) {
   )
 
   def get() : PostStream = {
-    SubredditService.getListing(endpoint,params.toMap,reddit)
+    SubredditService.getStream(endpoint,params.toMap,reddit)
   }
 
   def before( name : String) : PostStreamSlice = {
