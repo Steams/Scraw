@@ -29,3 +29,5 @@ case class Comment (
   val subreddit_id : String,
   val distinguished : String
   ) extends BaseObject(id,name) {}
+
+// replies have kind_t1 but may have kind "more" and be links to other child comments

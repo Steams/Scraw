@@ -34,35 +34,35 @@ case class Subreddit (
 
   var instance : Option[Reddit] = None
 
-  def hot() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_hot",display_name),instance.get)
-  }
-
-  def top() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_top",display_name),instance.get)
-  }
-
-  def newest() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_new",display_name),instance.get)
-  }
-
-  def rising() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_rising",display_name),instance.get)
-  }
-
-  def random() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_random",display_name),instance.get)
-  }
-
-  def controvertial() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_controvertial",display_name),instance.get)
-  }
-
-  // def comments()
-
   private def setInstance(reddit : Reddit) = {
     instance = Some(reddit)
   }
+
+  def hot() : PostStreamSlice = {
+    return PostStreamSlice(Endpoint("subreddit_listing_hot")(display_name),instance.get)
+  }
+
+  def top() : PostStreamSlice = {
+    return PostStreamSlice(Endpoint("subreddit_listing_top")(display_name),instance.get)
+  }
+
+  def newest() : PostStreamSlice = {
+    return PostStreamSlice(Endpoint("subreddit_listing_new")(display_name),instance.get)
+  }
+
+  def rising() : PostStreamSlice = {
+    return PostStreamSlice(Endpoint("subreddit_listing_rising")(display_name),instance.get)
+  }
+
+  def random() : PostStreamSlice = {
+    return PostStreamSlice(Endpoint("subreddit_listing_random")(display_name),instance.get)
+  }
+
+  def controvertial() : PostStreamSlice = {
+    return PostStreamSlice(Endpoint("subreddit_listing_controvertial")(display_name),instance.get)
+  }
+
+  // def comments()
 
 }
 

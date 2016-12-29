@@ -1,5 +1,6 @@
 package  com.steams.scraw.posts
 
+import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.utils.apiObjects.{BaseObject}
 
 
@@ -36,5 +37,23 @@ case class Post(
     // val media_embed : Object,
     // val likes : String, //this is NOT the score, best leave this out
 ) extends BaseObject(id,name) {
+
+  var instance : Option[Reddit] = None
+
+  private def setInstance(reddit : Reddit) = {
+    instance = Some(reddit)
+  }
+
+  //coomments should be able to be flattened
+  // def comments() : CommentStream
+}
+
+object Post {
+
+  def apply(id : String)(implicit reddit : Reddit ) : Post = {
+    val post = PostService.getPost(id,reddit)
+    post.setInstance(reddit)
+    return post
+  }
 
 }

@@ -8,7 +8,7 @@ object scrawbot{
 
     val config : InstanceConfig = loadConfig[InstanceConfig]("bot").get
 
-    implicit val instance : Reddit = reddit.Reddit(config)
+    implicit val instance : Reddit = Reddit(config)
 
     println("Your user name is : " + instance.owner.name)
 
@@ -16,20 +16,23 @@ object scrawbot{
     println(cscq.title)
 
     // val cscq_listing = cscq.hot().limit(5)
-    //this should implicitly convert from PostListingBuilder to PostListing
     // println(cscq_listing.children.size)
 
     val poe = Subreddit("pathofexile")
 
     val posts = poe.top().time("all").limit(2)
 
+    //this is implicitly converted from StreamSlice to PostStream when you try to use it like an itterator
     for(x <- posts){
       println(x.url + " : Score : " + x.score)
+      println("Comments should be at url : " + x.id)
     }
-
 
     val user = User("lordtuts")
     println(user.name + "'s link karma is : " + user.link_karma)
+
+    val test_post = Post("5kw01c")
+    println("Post title is : " + test_post.title )
 
   }
 }

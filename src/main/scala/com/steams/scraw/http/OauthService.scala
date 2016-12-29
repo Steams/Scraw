@@ -5,10 +5,10 @@ import scala.util.Try
 import net.liftweb.json._
 import scalaj.http.{Base64, Http}
 
-import com.steams.scraw.utils.HandleJson
+import com.steams.scraw.utils.JsonHandler
 
 
-object OauthService extends HandleJson {
+object OauthService extends JsonHandler {
 
   def authenticate(
     client_id : String,
