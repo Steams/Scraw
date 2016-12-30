@@ -31,8 +31,14 @@ object scrawbot{
     val user = User("lordtuts")
     println(user.name + "'s link karma is : " + user.link_karma)
 
-    val test_post = Post("5kw01c")
+    val test_post = Post("5l2xs1")
     println("Post title is : " + test_post.title )
+    val comments = test_post.comments().newest()
+    for(x <- comments){
+      println("")
+      println(" " + x.author + " :> " + x.body + " ")
+      println("")
+    }
 
   }
 }

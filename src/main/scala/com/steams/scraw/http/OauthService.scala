@@ -22,7 +22,8 @@ object OauthService extends JsonHandler {
       .postForm(Seq(
                   "grant_type" -> "password",
                   "username" -> username,
-                  "password" -> password))
+                  "password" -> password
+                ))
       .header("Authorization","Basic " + genSignature(client_id,client_secret))
       .header("User-Agent",user_agent)
       .asString
@@ -32,5 +33,5 @@ object OauthService extends JsonHandler {
     return Try(jval.get)
   }
 
-  def genSignature(key : String, secret : String) : String = { Base64.encodeString(key+":"+secret) }
+  def genSignature(key : String, secret : String) : String = { Base64.encodeString(key + ":" + secret) }
 }

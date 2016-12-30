@@ -20,6 +20,9 @@ package object scraw {
   type User = com.steams.scraw.users.User
   val User = com.steams.scraw.users.User
 
+  type Comment = com.steams.scraw.comments.Comment
+  val Comment = com.steams.scraw.comments.Comment
+
   //you should make a base trait for streamSlice and Itterable
   implicit def StreamSliceToStream[A <: Iterable[Any] ]( slice : StreamSlice[A] ) : A =  slice.getStream()
 

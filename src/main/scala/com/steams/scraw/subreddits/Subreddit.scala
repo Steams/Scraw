@@ -38,6 +38,8 @@ case class Subreddit (
     instance = Some(reddit)
   }
 
+  // def comments()
+
   def hot() : PostStreamSlice = {
     return PostStreamSlice(Endpoint("subreddit_listing_hot")(display_name),instance.get)
   }
@@ -62,7 +64,6 @@ case class Subreddit (
     return PostStreamSlice(Endpoint("subreddit_listing_controvertial")(display_name),instance.get)
   }
 
-  // def comments()
 
 }
 

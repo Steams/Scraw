@@ -17,7 +17,8 @@ object Endpoint {
     "subreddit_listing_rising" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/rising"),
     "subreddit_listing_controversial" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/controvertial"),
     "about_user" -> ((name : String) => "https://oauth.reddit.com/user/"+name+"/about"),
-    "about_post" -> ((name : String) => "https://oauth.reddit.com/by_id/t3_"+name)
+    "about_post" -> ((name : String) => "https://oauth.reddit.com/by_id/t3_"+name),
+    "post_comments" -> ((name : String) => "https://oauth.reddit.com/r/_"+name)
   )
 
 
