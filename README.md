@@ -38,6 +38,12 @@ println("Number of subscribers : " + cscq.subscribers )
     val poe = Subreddit("pathofexile")
 
     val posts = poe.top().time("all").limit(2)
+    //posts here is of type PostStreamSlice, a type returned by Subreddit.top,Subreddit.newest etc.
+    //this type exposes an interface for refining your query by count, limit, before, after etc.
+    //the http request is not made until you attempt to call an Iterator method on the StreamSlice
+    
+    //here the PostStreamSlice is implicitly converted into a PostStream...
+    //...which extends Iterable and exposes an iterator to the retrieved posts
     
     for(x <- posts){
       println(x.title + " : Score : " + x.score)
