@@ -19,7 +19,7 @@ object CommentService extends JsonHandler {
         .banned_by((root_comment \ "banned_by").extract[String])
         .body((root_comment \ "body").extract[String])
         .body_html((root_comment \ "body_html").extract[String])
-        .edited((root_comment \ "edited").extract[Boolean])
+        // .edited((root_comment \ "edited").extract[Boolean])
         .gilded((root_comment \ "gilded").extract[Int])
         .likes((root_comment \ "likes").extract[Boolean])
         .link_author((root_comment \ "link_author").extract[Option[String]])
@@ -46,7 +46,7 @@ object CommentService extends JsonHandler {
     } else {
       val sub_comments = for(
         x <- (root_comment \ "replies" \ "data" \ "children").children
-        if x \ "kind" == "t1"
+        if (x \ "kind").extract[String] == "t1"
       ) yield { buildCommentThread(x \ "data") }
 
       //now u need to construct the comment and just set the sub comments
