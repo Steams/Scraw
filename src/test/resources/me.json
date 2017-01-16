@@ -1,0 +1,102 @@
+{
+    "is_employee": false,
+    "has_mail": false,
+    "name": "scraw_tester_bot",
+    "created": 1482133741,
+    "hide_from_robots": false,
+    "is_suspended": false,
+    "created_utc": 1482104941,
+    "has_mod_mail": false,
+    "link_karma": 1,
+    "in_beta": false,
+    "comment_karma": 0,
+    "features": {
+        "new_user_onboarding": {
+            "variant": "control_1",
+            "experiment_id": 81
+        },
+        "live_happening_now": true,
+        "adserver_reporting": true,
+        "mweb_xpromo_interstitial_fp_v2": {
+            "variant": "static",
+            "experiment_id": 116
+        },
+        "ads_auto_refund": true,
+        "mweb_xpromo_interstitial_listing_android": {
+            "variant": "subreddit",
+            "experiment_id": 100
+        },
+        "mobile_web_targeting": true,
+        "ads_auction": true,
+        "adzerk_do_not_track": true,
+        "whitelisted_pms": true,
+        "show_rules_on_submit_page": {
+            "variant": "control_1",
+            "experiment_id": 119
+        },
+        "sticky_comments": true,
+        "upgrade_cookies": true,
+        "ads_prefs": true,
+        "mweb_xpromo_interstitial_listing_ios": {
+            "variant": "subreddit",
+            "experiment_id": 101
+        },
+        "legacy_search_pref": true,
+        "orangereds_as_emails": true,
+        "mweb_xpromo_transparent_fp": {
+            "variant": "control_1",
+            "experiment_id": 122
+        },
+        "mweb_xpromo_interstitial_fp_ios": {
+            "variant": "control_1",
+            "experiment_id": 99
+        },
+        "mweb_xpromo_transparent_listing": {
+            "variant": "control_1",
+            "experiment_id": 121
+        },
+        "expando_events": true,
+        "eu_cookie_policy": true,
+        "utm_comment_links": true,
+        "force_https": true,
+        "mobile_native_banner": true,
+        "do_not_track": true,
+        "outbound_clicktracking": true,
+        "image_uploads": true,
+        "new_loggedin_cache_policy": true,
+        "mweb_xpromo_interstitial_listing_v2": {
+            "variant": "control_2",
+            "experiment_id": 117
+        },
+        "https_redirect": true,
+        "screenview_events": true,
+        "pause_ads": true,
+        "programmatic_ads": true,
+        "give_hsts_grants": true,
+        "new_report_dialog": true,
+        "moat_tracking": true,
+        "subreddit_rules": true,
+        "mobile_settings": true,
+        "adzerk_reporting_2": true,
+        "activity_service_write": true,
+        "ads_auto_extend": true,
+        "interest_targeting": true,
+        "post_embed": true,
+        "scroll_events": true,
+        "mweb_xpromo_interstitial_fp_android": {
+            "variant": "control_1",
+            "experiment_id": 98
+        },
+        "adblock_test": true,
+        "activity_service_read": true
+    },
+    "over_18": false,
+    "is_gold": false,
+    "is_mod": false,
+    "id": "13ofe2",
+    "gold_expiration": null,
+    "inbox_count": 0,
+    "has_verified_email": true,
+    "gold_creddits": 0,
+    "suspension_expiration_utc": null
+}

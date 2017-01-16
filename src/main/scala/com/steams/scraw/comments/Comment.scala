@@ -2,6 +2,24 @@ package com.steams.scraw.comments
 
 import com.steams.scraw.utils.apiObjects.BaseObject
 
+
+// case class CommentNode( id : String )
+
+trait Commentifiable {}
+
+case class CommentsLink (
+  name : String,
+  parent : String,
+  count : Int,
+  depth : Int
+) extends Commentifiable {
+  //extend itterable
+
+  // def get : List[Commentifiable] = { // commentService.getMoreComments(id)}
+
+}
+
+
 case class Comment (
   override val id : String,
   override val name : String,
@@ -21,18 +39,17 @@ case class Comment (
   val link_url : Option[String],
   val num_reports : Int,
   val parent_id : String,
-  val replies : Option[List[Comment]],
+  val replies : Option[List[Commentifiable]],
   val saved : Boolean,
   val score : Int,
   val score_hidden : Boolean,
   val subreddit : String,
   val subreddit_id : String,
-  val distinguished : String
-  // val depth : Int
-  // val parent : CommentNode
-  ) extends BaseObject(id,name) {}
+  val distinguished : String,
+  val depth : Int
+) extends BaseObject(id,name) with Commentifiable{}
 
-// replies have kind_t1 but may have kind "more" and be links to other child comments
+
 object Comment {
   def builder() : CommentBuilder = new CommentBuilder()
 }
@@ -163,14 +180,20 @@ class CommentBuilder(){
     this.distinguished = parm
     return this
   }
-  var replies : Option[List[Comment]] = _
-  def replies(parm : Option[List[Comment]]) : CommentBuilder = {
+  var replies : Option[List[Commentifiable]] = _
+  def replies(parm : Option[List[Commentifiable]]) : CommentBuilder = {
     this.replies = parm
     return this
   }
 
+  var depth : Int = _
+  def depth(parm : Int) : CommentBuilder = {
+    this.depth = parm
+    return this
+  }
+
   def build() : Comment = {
-    Comment(id, name, approved_by, author, author_flair_css_class, author_flair_text, banned_by, body, body_html, edited, gilded, likes, link_author, link_id, link_title, link_url, num_reports, parent_id, replies, saved, score, score_hidden, subreddit, subreddit_id, distinguished)
+    Comment(id, name, approved_by, author, author_flair_css_class, author_flair_text, banned_by, body, body_html, edited, gilded, likes, link_author, link_id, link_title, link_url, num_reports, parent_id, replies, saved, score, score_hidden, subreddit, subreddit_id, distinguished, depth)
   }
 }
 

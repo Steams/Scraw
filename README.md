@@ -1,5 +1,5 @@
 # Scraw
-Scala Reddit API Wrapper library (Work in progress). Inspired by PRAW and JRAW.
+Scala Reddit API Wrapper library (Work in progress). Inspired by [PRAW](https://github.com/praw-dev/praw) and [JRAW](https://github.com/thatJavaNerd/JRAW).
 
 The aim of this project is to provide a wrapper for Reddit's API which exposes an easy to use interface in idiomatic, functional scala. 
 
@@ -65,12 +65,15 @@ println("Number of subscribers : " + cscq.subscribers )
     val test_post = Post("5l2xs1")
     println("Post title is : " + test_post.title )
     val comments = test_post.comments().newest()
+
     for(x <- comments){
-      println("")
-      println(" " + x.author + " :> " + x.body + " ")
-      println("")
+      x match {
+        case comment : Comment => println(" " + x.author + " :> " + x.body + " ")
+        case link : CommentsLink => println("Load more comments : " + link.name)
+      }
     }
     //these are top level comments which each contain a list of replies
+    //a function to flatten the tree will be provided
 
 ````
 

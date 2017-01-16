@@ -1,6 +1,6 @@
 package com.steams.scraw
 
-import net.liftweb.json._
+import net.liftweb.json.{DefaultFormats}
 import net.liftweb.json.JsonAST.{JValue}
 import scala.language.implicitConversions
 

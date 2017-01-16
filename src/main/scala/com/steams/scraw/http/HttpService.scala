@@ -2,6 +2,9 @@ package com.steams.scraw.http
 
 import scalaj.http.Http
 
+//should probably define restRequest and Response types
+//make and HttpProvider interface so u cna stub it for tests
+
 object HttpService {
 
   def get(endpoint : String,token:String) : String = {

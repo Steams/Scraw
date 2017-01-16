@@ -31,14 +31,17 @@ object scrawbot{
     // val user = User("lordtuts")
     // println(user.name + "'s link karma is : " + user.link_karma)
 
-    val test_post = Post("5nczpg")
+    val test_post = Post("5iv0hf")
     println("Post title is : " + test_post.title )
 
-    val comments = test_post.comments().top()
+    val comments = test_post.comments()
 
 
     for( x <- comments){
-      printComments(x,1)
+      x match {
+        case comment : Comment => printComments(comment,1)
+        case link : CommentsLink => println("Load more comments : " + link.name)
+      }
     }
   }
 
@@ -51,7 +54,18 @@ object scrawbot{
     println("")
 
     comment.replies match {
-      case Some(_) => for(x <- comment.replies.get){ printComments(x,indent+1) }
+      case Some(_) => for(x <- comment.replies.get){
+        x match {
+          case comment : Comment => printComments(comment,indent+1)
+          case link : CommentsLink => println("Load more comments : " + link.name)
+        }
+      }
+      // case Some(_) => for(x <- comment.replies.get){
+      //   x match {
+      //     case Comment => printComments(x,indent+1)
+      //     case MoreLink => for(p <- x.getComments){ printComments(x,indent+1)}
+      //   }
+      // }
       case None =>
     }
   }
