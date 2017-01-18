@@ -50,7 +50,7 @@ println("Number of subscribers : " + cscq.subscribers )
     }
     
     val single_post = Post("5l2xs1")
-    println("Post title is : " + test_post.title )
+    println("Post title is : " + single_post.title )
    
 ```
 
@@ -68,7 +68,7 @@ println("Number of subscribers : " + cscq.subscribers )
 
     for(x <- comments){
       x match {
-        case comment : Comment => println(" " + x.author + " :> " + x.body + " ")
+        case comment : Comment => println(" " + comment.author + " :> " + comment.body + " ")
         case link : CommentsLink => println("Load more comments : " + link.name)
       }
     }
