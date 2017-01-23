@@ -1,7 +1,5 @@
 package com.steams.scraw.comments
 
-import net.liftweb.json._
-
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.utils.JsonHandler
 import com.steams.scraw.http.HttpService
@@ -12,11 +10,12 @@ object CommentService extends JsonHandler {
 
     val response_body = HttpService.get(endpoint,reddit.access_token,params)
 
-    val jval = parse(response_body)
+    val jval = Jsonator.parse(response_body)
 
     //get the second child of the returned array. This structure contains the comments for the post
-    val comments_listing = jval.children(1) \ "data"
-    val comments_list = (comments_listing \ "children").children
+    val comments_listing = jval.children(1).property("data")
+
+    val comments_list = comments_listing.property("children").children
 
     val comments = CommentExtractor.buildCommentForrest(comments_list)
 

@@ -1,18 +1,16 @@
 package com.steams.scraw.comments
 
-import net.liftweb.json._
-
 import com.steams.scraw.utils.JsonHandler
 
 object CommentExtractor extends JsonHandler {
 
-  def buildCommentForrest( comments_list : List[JValue]) : List[Commentifiable] = {
+  def buildCommentForrest( comments_list : List[JsonValue]) : List[Commentifiable] = {
 
      val comments = for(root_comment <- comments_list) yield {
 
-      if((root_comment \ "kind").extract[String] == "t1" ){
+      if(root_comment.property("kind").toString == "t1" ){
 
-        CommentExtractor.buildCommentThread(root_comment \ "data", 0)
+        CommentExtractor.buildCommentThread(root_comment.property("data"), 0)
 
       } else {
 
@@ -25,16 +23,16 @@ object CommentExtractor extends JsonHandler {
 
   }
 
-  def buildCommentThread(root_comment : JValue, depth : Int) : Comment = {
-    if((root_comment \"replies").children.size <= 0){
+  def buildCommentThread(root_comment : JsonValue, depth : Int) : Comment = {
+    if(root_comment.property("replies").children.size <= 0){
       val comment = buildComment(root_comment, depth)
       return comment
     } else {
-      val sub_comments = for(x <- (root_comment \ "replies" \ "data" \ "children").children) yield {
-        if((x \ "kind").extract[String] == "t1" ){
-          buildCommentThread(x \ "data", depth +1)
+      val sub_comments = for(x <- root_comment.property("replies").property("data").property("children").children) yield {
+        if(x.property("kind").toString == "t1" ){
+          buildCommentThread(x.property("data"), depth +1)
         } else {
-          buildCommentsLink(x \ "data", depth +1)
+          buildCommentsLink(x.property("data"), depth +1)
         }
       }
 
@@ -44,44 +42,47 @@ object CommentExtractor extends JsonHandler {
     }
   }
 
-  def buildComment(root_comment : JValue, depth: Int, sub_comments : Option[List[Commentifiable]] = None)
+  def buildComment(root_comment : JsonValue, depth: Int, sub_comments : Option[List[Commentifiable]] = None)
       : Comment = {
       val comment = Comment.builder()
-        .id((root_comment \ "id").extract[String])
-        .name((root_comment \ "name").extract[String])
-        .approved_by((root_comment \ "approved_by").extract[String])
-        .author((root_comment \ "author").extract[String])
-        .author_flair_css_class((root_comment \ "author_flair_css_class").extract[String])
-        .author_flair_text((root_comment \ "author_flair_text").extract[String])
-        .banned_by((root_comment \ "banned_by").extract[String])
-        .body((root_comment \ "body").extract[String])
-        .body_html((root_comment \ "body_html").extract[String])
+        .id(root_comment \ "id")
+        .name(root_comment \ "name")
+        .approved_by(root_comment \ "approved_by")
+        .author(root_comment \ "author")
+        .author_flair_css_class(root_comment \ "author_flair_css_class")
+        .author_flair_text(root_comment \ "author_flair_text")
+        .banned_by(root_comment \ "banned_by")
+        .body(root_comment \ "body")
+        .body_html(root_comment \ "body_html")
         // .edited((root_comment \ "edited").extract[Boolean])
-        .gilded((root_comment \ "gilded").extract[Int])
-        .likes((root_comment \ "likes").extract[Boolean])
-        .link_author((root_comment \ "link_author").extract[Option[String]])
-        .link_id((root_comment \ "link_id").extract[String])
-        .link_title((root_comment \ "link_title").extract[Option[String]])
-        .link_url((root_comment \ "link_url").extract[Option[String]])
-        .num_reports((root_comment \ "num_reports").extract[Int])
-        .parent_id((root_comment \ "parent_id").extract[String])
-        .saved((root_comment \ "saved").extract[Boolean])
-        .score((root_comment \ "score").extract[Int])
-        .score_hidden((root_comment \ "score_hidden").extract[Boolean])
-        .subreddit((root_comment \ "subreddit").extract[String])
-        .subreddit_id((root_comment \ "subreddit_id").extract[String])
-        .distinguished((root_comment \ "distinguished").extract[String])
+        .gilded(root_comment \ "gilded")
+        .likes(root_comment \ "likes")
+        .link_author(root_comment \ "link_author")
+        .link_id(root_comment \ "link_id")
+        .link_title(root_comment \ "link_title")
+        .link_url(root_comment \ "link_url")
+        .num_reports(root_comment \ "num_reports")
+        .parent_id(root_comment \ "parent_id")
+        .saved(root_comment \ "saved")
+        .score(root_comment \ "score")
+        .score_hidden(root_comment \ "score_hidden")
+        .subreddit(root_comment \ "subreddit")
+        .subreddit_id(root_comment \ "subreddit_id")
+        .distinguished(root_comment \ "distinguished")
         .replies(sub_comments)
         .depth(depth)
         .build()
+
+    // these use \ because it was faster to define the \ method on my JsonValue type than to change these to .property calls IE purely Lazyness, please refactor. TODO
+
       return comment
   }
 
-  def buildCommentsLink(link_data : JValue, depth : Int) : CommentsLink = {
+  def buildCommentsLink(link_data : JsonValue, depth : Int) : CommentsLink = {
     return CommentsLink(
-      (link_data \ "name").extract[String],
-      (link_data \ "parent_id").extract[String],
-      (link_data \ "count").extract[Int],
+      link_data.property("name"),
+      link_data.property("parent_id"),
+      link_data.property("count"),
       depth
     )
   }

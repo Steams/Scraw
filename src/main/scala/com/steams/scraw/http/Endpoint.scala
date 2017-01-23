@@ -22,7 +22,7 @@ object Endpoint {
   )
 
 
-  def apply(title : String)(implicit arg: String) : String = {
+  def apply(title : String)(implicit arg: String = "") : String = {
     endpoints.get(title) match {
       case Some(func) => func(arg)
       case None => ""

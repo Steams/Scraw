@@ -18,7 +18,7 @@ object PostService extends JsonHandler {
     val stuff = parse(response_body) \ "data" \ "children"
 
     //children(0) gets the first child of the node which happens to be NAMED "children" 
-    return stuff.children(0).\("data").extract[Post]
+    return stuff.children(0).property("data").extract[Post]
   }
 
   // def getComments(endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : PostStream = {

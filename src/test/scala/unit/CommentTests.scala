@@ -4,15 +4,18 @@ import scala.io.Source
 import scala.language.implicitConversions
 
 import org.scalatest._
-import net.liftweb.json._
 
 import com.steams.scraw.utils.JsonHandler
+import com.steams.scraw.utils.JsonParsing._
 import com.steams.scraw.comments._
 
 
 class CommentSpec extends FlatSpec with Matchers with JsonHandler {
   /* Tests to write
    - parse comment thread consisting of single comment with no replies
+   - parse single more comment link
+   - parse nested comments
+   - parse nested comments with more links
    */
   behavior of "Comment Factory"
 
@@ -22,7 +25,7 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
 
     val content = try { source.mkString } finally { source.close() }
 
-    val comments_json : List[JValue] = parse(content).children
+    val comments_json : List[JsonValue] = parse(content).children
 
     val comments : List[Commentifiable] = CommentExtractor.buildCommentForrest(comments_json)
 
@@ -30,25 +33,16 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
 
     val comment : Comment = comments(0).asInstanceOf[Comment]
 
-    // comment.isEquivalentTo(comments_json(0) \ "data") should be {true}
+    val json_comment = comments_json(0)
 
-    comment.name should be {(comments_json(0) \"data" \ "name").extract[String]}
-    comment.author should be {(comments_json(0) \"data" \ "author").extract[String]}
-    comment.id should be {(comments_json(0) \"data" \ "id").extract[String]}
+    comment.name should be {json_comment \"data" \ "name" toString}
+    comment.author should be {json_comment \"data" \ "author" toString}
+    comment.id should be {json_comment \"data" \ "id" toString}
     comment.depth should be (0)
   }
 
-  implicit def CommentToTestableComment( comment : Comment) : TestableComment = TestableComment(comment)
 }
 
-case class TestableComment(comment : Comment) extends JsonHandler {
-
-  def isEquivalentTo( json_comment : JValue) : Boolean = {
-    return {
-      comment.name == (json_comment \ "name").extract[String]
-    }
-  }
-}
 
 
 /*

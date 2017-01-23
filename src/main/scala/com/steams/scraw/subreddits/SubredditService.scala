@@ -1,7 +1,5 @@
 package com.steams.scraw.subreddits
 
-import net.liftweb.json._
-
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.utils.JsonHandler
 import com.steams.scraw.http.{Endpoint,HttpService}
@@ -14,7 +12,7 @@ object SubredditService extends JsonHandler {
 
     val response_body = HttpService.get(Endpoint("about_subreddit")(name),reddit.access_token)
 
-    return parse(response_body).\("data").extract[Subreddit]
+    return parse(response_body).property("data").extract[Subreddit]
   }
 
 

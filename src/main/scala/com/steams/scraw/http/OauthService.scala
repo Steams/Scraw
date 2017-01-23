@@ -28,9 +28,10 @@ object OauthService extends JsonHandler {
       .header("User-Agent",user_agent)
       .asString
 
-    val jval = parse(response.body).\("access_token").extractOpt[String]
+    val jval = parse(response.body) \ "access_token"
 
-    return Try(jval.get)
+    return Try(jval)
+
   }
 
   def genSignature(key : String, secret : String) : String = { Base64.encodeString(key + ":" + secret) }

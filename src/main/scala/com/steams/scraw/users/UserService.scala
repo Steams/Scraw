@@ -1,7 +1,5 @@
 package com.steams.scraw.users
 
-import net.liftweb.json.{parse}
-
 import com.steams.scraw.utils.JsonHandler
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.http.{Endpoint,HttpService}
