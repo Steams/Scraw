@@ -17,7 +17,7 @@ object CommentService extends JsonHandler {
 
     val comments_list = comments_listing.property("children").children
 
-    val comments = CommentExtractor.buildCommentForrest(comments_list)
+    val comments = CommentsFactory.buildCommentForrest(comments_list)
 
     val comment_stream = CommentStream(
       (comments_listing \ "modhash"),

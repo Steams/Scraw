@@ -2,7 +2,7 @@ package com.steams.scraw.comments
 
 import com.steams.scraw.utils.JsonHandler
 
-object CommentExtractor extends JsonHandler {
+object CommentsFactory extends JsonHandler {
 
   def buildCommentForrest( comments_list : List[JsonValue]) : List[Commentifiable] = {
 
@@ -10,11 +10,11 @@ object CommentExtractor extends JsonHandler {
 
       if(root_comment.property("kind").toString == "t1" ){
 
-        CommentExtractor.buildCommentThread(root_comment.property("data"), 0)
+        CommentsFactory.buildCommentThread(root_comment.property("data"), 0)
 
       } else {
 
-        CommentExtractor.buildCommentsLink(root_comment, 0)
+        CommentsFactory.buildCommentsLink(root_comment, 0)
       }
 
     }
