@@ -2,7 +2,6 @@ package com.steams.scraw.http
 
 import scala.util.Try
 
-import net.liftweb.json._
 import scalaj.http.{Base64, Http}
 
 import com.steams.scraw.utils.JsonHandler

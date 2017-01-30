@@ -1,20 +1,21 @@
 package com.steams.scraw.comments
 
 import com.steams.scraw.utils.JsonHandler
+import com.steams.scraw.reddit.Reddit
 
 object CommentsFactory extends JsonHandler {
 
-  def buildCommentForrest( comments_list : List[JsonValue]) : List[Commentifiable] = {
+  def buildCommentForrest( comments_list : List[JsonValue], link_id : LinkId, reddit : Reddit) : List[Commentifiable] = {
 
      val comments = for(root_comment <- comments_list) yield {
 
       if(root_comment.property("kind").toString == "t1" ){
 
-        CommentsFactory.buildCommentThread(root_comment.property("data"), 0)
+        CommentsFactory.buildCommentThread(root_comment.property("data"), 0, link_id, reddit)
 
       } else {
 
-        CommentsFactory.buildCommentsLink(root_comment, 0)
+        CommentsFactory.buildCommentsLink(root_comment, 0, link_id, reddit)
       }
 
     }
@@ -23,16 +24,21 @@ object CommentsFactory extends JsonHandler {
 
   }
 
-  def buildCommentThread(root_comment : JsonValue, depth : Int) : Comment = {
+  def buildCommentThread(root_comment : JsonValue, depth : Int, link_id : LinkId, reddit : Reddit) : Comment = {
+
     if(root_comment.property("replies").children.size <= 0){
+
       val comment = buildComment(root_comment, depth)
       return comment
     } else {
+
       val sub_comments = for(x <- root_comment.property("replies").property("data").property("children").children) yield {
         if(x.property("kind").toString == "t1" ){
-          buildCommentThread(x.property("data"), depth +1)
+
+          buildCommentThread(x.property("data"), depth +1, link_id, reddit)
         } else {
-          buildCommentsLink(x.property("data"), depth +1)
+
+          buildCommentsLink(x.property("data"), depth +1, link_id, reddit)
         }
       }
 
@@ -41,6 +47,7 @@ object CommentsFactory extends JsonHandler {
       return comment
     }
   }
+
 
   def buildComment(root_comment : JsonValue, depth: Int, sub_comments : Option[List[Commentifiable]] = None)
       : Comment = {
@@ -78,12 +85,33 @@ object CommentsFactory extends JsonHandler {
       return comment
   }
 
-  def buildCommentsLink(link_data : JsonValue, depth : Int) : CommentsLink = {
+  def buildCommentsLink(link_data : JsonValue, depth : Int, link_id : LinkId, reddit : Reddit) : CommentsLink = {
     return CommentsLink(
-      link_data.property("name"),
-      link_data.property("parent_id"),
-      link_data.property("count"),
-      depth
+      name = link_data \ "data" \ "name",
+      parent = link_data \ "data" \ "parent_id",
+      count = link_data \ "data" \ "count",
+      children = link_data.property("data").property("children").children.map(x => x.toString),
+      link_id = link_id,
+      reddit = reddit,
+      depth = depth
     )
   }
+
+  def buildCommentsList( comments_list : List[JsonValue], link_id : LinkId, reddit : Reddit) : List[Commentifiable] = {
+    val comments = for(root_comment <- comments_list) yield {
+
+      if(root_comment.property("kind").toString == "t1" ){
+
+        buildComment(root_comment.property("data"), 0)
+
+      } else {
+        CommentsFactory.buildCommentsLink(root_comment, 0, link_id, reddit)
+      }
+
+    }
+
+    return comments
+  }
+  // def generateCommentTree()
+
 }

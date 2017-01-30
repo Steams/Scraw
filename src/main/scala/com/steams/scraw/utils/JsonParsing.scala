@@ -2,8 +2,9 @@ package com.steams.scraw.utils
 
 import net.liftweb.json._
 
-//json only has 3 types, array, object, and primative (string/int)
-package JsonParsing { abstract class JsonParser {
+package JsonParsing {
+
+  abstract class JsonParser {
     def parse( json : String) : JsonValue
   }
 

@@ -26,4 +26,13 @@ object HttpService {
     return response.body
   }
 
+  def post(endpoint : String, body : Seq[(String,String)], token : String) : String = {
+    val response  = Http(endpoint)
+      .postForm(body)
+      .header("Authorization","bearer " + token)
+      .asString
+
+    return response.body
+  }
+
 }

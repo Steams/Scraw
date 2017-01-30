@@ -4,7 +4,7 @@ import com.steams.scraw.http.OauthService
 import com.steams.scraw.users.{User, UsersService}
 import com.steams.scraw.utils.InstanceConfig
 
-case class Reddit private(val username : String, val password : String, val access_token : String) {
+case class Reddit private[scraw] (val username : String, val password : String, val access_token : String) {
 
   def owner : User = UsersService.getUser("me",this)
 
@@ -14,7 +14,7 @@ object Reddit{
 
   def apply(config: InstanceConfig) : Reddit = {
 
-    val access_token =  OauthService.authenticate(
+    lazy val access_token =  OauthService.authenticate(
       config.client_id,
       config.client_secret,
       config.user_agent,

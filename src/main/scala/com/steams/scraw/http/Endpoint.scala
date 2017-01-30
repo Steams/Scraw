@@ -4,7 +4,7 @@ package com.steams.scraw.http
 
 object Endpoint {
 
-  //might want to refactor these to enums
+  //why not just define each of these as their own functions
   val endpoints : Map[String, (String) => String] = Map(
     "access_token" -> ((_:String) => "https://www.reddit.com/api/v1/access_token"),
     "me" -> ((_:String) => "https://oauth.reddit.com/api/v1/me"),
@@ -18,7 +18,8 @@ object Endpoint {
     "subreddit_listing_controversial" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/controvertial"),
     "about_user" -> ((name : String) => "https://oauth.reddit.com/user/"+name+"/about"),
     "about_post" -> ((name : String) => "https://oauth.reddit.com/by_id/t3_"+name),
-    "post_comments" -> ((name : String) => "https://oauth.reddit.com/r/_"+name)
+    "post_comments" -> ((name : String) => "https://oauth.reddit.com/r/_"+name),
+    "more_comments" -> ((_: String) => "https://oauth.reddit.com/api/morechildren")
   )
 
 
