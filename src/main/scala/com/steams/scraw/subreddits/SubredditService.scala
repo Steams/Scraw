@@ -10,7 +10,7 @@ object SubredditService extends JsonHandler {
 
   def getSubreddit(name : String, reddit : Reddit) : Subreddit = {
 
-    val response_body = HttpService.get(Endpoint("about_subreddit")(name),reddit.access_token)
+    val response_body = HttpService.get(Endpoint.about_subreddit(name),reddit.access_token)
 
     return parse(response_body).property("data").extract[Subreddit]
   }

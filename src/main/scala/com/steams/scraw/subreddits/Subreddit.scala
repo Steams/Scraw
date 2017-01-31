@@ -3,6 +3,7 @@ package com.steams.scraw.subreddits
 import com.steams.scraw.utils.apiObjects.{BaseObject}
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.http.Endpoint
+import com.steams.scraw.http.Sorting
 import com.steams.scraw.posts.PostStreamSlice
 
 case class Subreddit (
@@ -41,30 +42,28 @@ case class Subreddit (
   // def comments()
 
   def hot() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_hot")(display_name),instance.get)
+    return PostStreamSlice(Endpoint.subreddit_listing(display_name, Sorting.Hot),instance.get)
   }
 
   def top() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_top")(display_name),instance.get)
+    return PostStreamSlice(Endpoint.subreddit_listing(display_name, Sorting.Top),instance.get)
   }
 
   def newest() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_new")(display_name),instance.get)
+    return PostStreamSlice(Endpoint.subreddit_listing(display_name, Sorting.Newest),instance.get)
   }
 
   def rising() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_rising")(display_name),instance.get)
+    return PostStreamSlice(Endpoint.subreddit_listing(display_name, Sorting.Rising),instance.get)
   }
 
   def random() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_random")(display_name),instance.get)
+    return PostStreamSlice(Endpoint.subreddit_listing(display_name, Sorting.Random),instance.get)
   }
 
   def controvertial() : PostStreamSlice = {
-    return PostStreamSlice(Endpoint("subreddit_listing_controvertial")(display_name),instance.get)
+    return PostStreamSlice(Endpoint.subreddit_listing(display_name, Sorting.Controversial),instance.get)
   }
-
-
 }
 
 object Subreddit {

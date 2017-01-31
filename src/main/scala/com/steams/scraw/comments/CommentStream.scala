@@ -1,5 +1,6 @@
 package com.steams.scraw.comments
 
+import com.steams.scraw.http.Endpoint
 import scala.collection.mutable.Map
 
 import com.steams.scraw.reddit.Reddit
@@ -23,14 +24,13 @@ case class CommentStream(
 }
 
 
-
 case class CommentStreamSlice(val post_id : String, val subreddit : String, val reddit : Reddit )
     extends StreamSlice[CommentStream]{
 
   val params : Map[String,Option[String]] = Map("sort" -> None)
 
   override def getStream() : CommentStream = {
-    CommentService.getStream(" https://oauth.reddit.com/r/"+subreddit+"/comments/"+post_id,params.toMap,reddit)
+    CommentService.getStream(Endpoint.post_comment_stream(subreddit,post_id),params.toMap,reddit)
   }
 
   def top() : CommentStreamSlice = {

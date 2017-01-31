@@ -22,6 +22,8 @@ object Reddit{
       config.password
     ).get
 
+    println(access_token)
+
     return Reddit(config.username,config.password,access_token)
   }
 }

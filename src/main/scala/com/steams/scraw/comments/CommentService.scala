@@ -5,14 +5,14 @@ import com.steams.scraw.utils.JsonHandler
 import com.steams.scraw.http.HttpService
 import com.steams.scraw.http.Endpoint
 
-trait CommentServiceMock {
+trait CommentServiceStub {
   def getMoreCommentsFlat( link_id : LinkId, children : List[String], reddit : Reddit) : CommentStream
 }
 
 object CommentService extends JsonHandler {
 
 
-  var implementation : Option[CommentServiceMock] = None
+  var implementation : Option[CommentServiceStub] = None
   // def setImplementation( name :String) : Unit = {implementation = name }
 
   def getStream( endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : CommentStream = {
@@ -39,14 +39,6 @@ object CommentService extends JsonHandler {
     return comment_stream
   }
 
-  // def getMoreComments( link_id : LinkId, children : List[String], reddit : Reddit) : CommentStream = {
-  //   val response  = HttpService.post(
-  //     "https://oauth.reddit.com/api/morechildren",
-  //     Seq("link_id" -> link_id.toString, "children" -> children.mkString(",")),
-  //     reddit.access_token
-  //   )
-
-  // }
   private[scraw] def getMoreCommentsFlat( link_id : LinkId, children : List[String], reddit : Reddit) : CommentStream = {
 
     implementation match {
@@ -59,7 +51,7 @@ object CommentService extends JsonHandler {
     }
 
     val response_body = HttpService.post(
-      Endpoint("more_comments"),
+      Endpoint.more_children,
       Seq(
         "link_id" -> link_id.toString(),
         "children" -> children.mkString(","),

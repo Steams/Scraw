@@ -75,11 +75,11 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
 
     val content = try { source.mkString } finally { source.close() }
 
-    val comments_json : List[JsonValue] = parse(content).children
+    val comments_json : JsonValue = parse(content)
 
     val comments : List[Commentifiable] = CommentsFactory.buildCommentForrest(
-      comments_json,
-      LinkId((comments_json(0) \ "data" \ "link_id").toString),
+      List(comments_json),
+      LinkId((comments_json \ "data" \ "link_id").toString),
       instance
     )
 
@@ -87,7 +87,7 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
 
     val comment : Comment = comments(0).asInstanceOf[Comment]
 
-    val json_comment = comments_json(0) \ "data"
+    val json_comment = comments_json \ "data"
 
     compareComment(comment,json_comment,0)
   }
@@ -124,7 +124,7 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
     val expected_content = try { expected_source.mkString } finally { expected_source.close() }
     val expected_json : List[JsonValue] = parse(expected_content).children
 
-    val mock = new CommentServiceMock{
+    val stub = new CommentServiceStub{
       override def getMoreCommentsFlat(
         link_id : LinkId,
         children : List[String],
@@ -140,7 +140,7 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
       }
     }
 
-    CommentService.implementation = Some(mock)
+    CommentService.implementation = Some(stub)
 
     val link_json : JsonValue = input_json(0) \ "data"
 

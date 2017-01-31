@@ -17,7 +17,7 @@ object OauthService extends JsonHandler {
     password : String
   ) : Try[String] = {
 
-    val response  = Http(Endpoint("access_token"))
+    val response  = Http(Endpoint.access_token)
       .postForm(Seq(
                   "grant_type" -> "password",
                   "username" -> username,
@@ -27,6 +27,7 @@ object OauthService extends JsonHandler {
       .header("User-Agent",user_agent)
       .asString
 
+    println(response.body)
     val jval = parse(response.body) \ "access_token"
 
     return Try(jval)

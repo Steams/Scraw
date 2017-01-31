@@ -1,32 +1,35 @@
 package com.steams.scraw.http
 
-
+object Sorting extends Enumeration {
+  val Top,Hot,Newest,Random,Rising,Controversial = Value
+}
 
 object Endpoint {
 
-  //why not just define each of these as their own functions
-  val endpoints : Map[String, (String) => String] = Map(
-    "access_token" -> ((_:String) => "https://www.reddit.com/api/v1/access_token"),
-    "me" -> ((_:String) => "https://oauth.reddit.com/api/v1/me"),
-    "about_subreddit" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/about"),
-    "subreddit_listing" -> ((name : String) => "https://oauth.reddit.com/r/"+name),
-    "subreddit_listing_hot" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/hot"),
-    "subreddit_listing_top" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/top"),
-    "subreddit_listing_new" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/new"),
-    "subreddit_listing_random" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/random"),
-    "subreddit_listing_rising" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/rising"),
-    "subreddit_listing_controversial" -> ((name : String) => "https://oauth.reddit.com/r/"+name+"/controvertial"),
-    "about_user" -> ((name : String) => "https://oauth.reddit.com/user/"+name+"/about"),
-    "about_post" -> ((name : String) => "https://oauth.reddit.com/by_id/t3_"+name),
-    "post_comments" -> ((name : String) => "https://oauth.reddit.com/r/_"+name),
-    "more_comments" -> ((_: String) => "https://oauth.reddit.com/api/morechildren")
-  )
+  val access_token = "https://www.reddit.com/api/v1/access_token"
+  val me = "https://www.reddit.com/api/v1/me"
+  val more_children = "https://oauth.reddit.com/api/morechildren"
 
+  def about_subreddit( name : String ) = { "https://oauth.reddit.com/r/"+name+"/about" }
 
-  def apply(title : String)(implicit arg: String = "") : String = {
-    endpoints.get(title) match {
-      case Some(func) => func(arg)
-      case None => ""
+  def subreddit_listing( name : String, sort : Sorting.Value = Sorting.Hot) : String = {
+    sort match {
+      case Sorting.Top => "https://oauth.reddit.com/r/"+name+"/top"
+      case Sorting.Hot => "https://oauth.reddit.com/r/"+name+"/hot"
+      case Sorting.Newest => "https://oauth.reddit.com/r/"+name+"/new"
+      case Sorting.Random => "https://oauth.reddit.com/r/"+name+"/random"
+      case Sorting.Rising => "https://oauth.reddit.com/r/"+name+"/rising"
+      case Sorting.Controversial => "https://oauth.reddit.com/r/"+name+"/controversial"
+      case _ => ""
     }
   }
+
+  def about_user(name : String) = { "https://oauth.reddit.com/user/"+name+"/about" }
+
+  def about_post(name: String) = { "https://oauth.reddit.com/by_id/t3_"+name }
+
+  def post_comment_stream(subreddit : String, post_id : String ) = {
+    "https://oauth.reddit.com/r/"+subreddit+"/comments/"+post_id
+  }
+
 }

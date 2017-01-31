@@ -1,7 +1,5 @@
 package com.steams.scraw.posts
 
-import net.liftweb.json._
-
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.utils.JsonHandler
 import com.steams.scraw.http.{Endpoint,HttpService}
@@ -9,10 +7,9 @@ import com.steams.scraw.http.{Endpoint,HttpService}
 
 object PostService extends JsonHandler {
 
-  //make request to by_id/t3_id
   def getPost(id : String, reddit : Reddit) : Post = {
 
-    val response_body = HttpService.get(Endpoint("about_post")(id),reddit.access_token)
+    val response_body = HttpService.get(Endpoint.about_post(id),reddit.access_token)
 
     //the request will return with an array "children" with only 1 child
     val stuff = parse(response_body) \ "data" \ "children"
