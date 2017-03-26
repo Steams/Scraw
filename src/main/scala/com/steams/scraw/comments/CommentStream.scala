@@ -6,10 +6,6 @@ import scala.collection.mutable.Map
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.utils.StreamSlice
 
-//override itterator to return a list of commentNodes converted to Comments or MoreLink
-
-// so moreLinks should be a subclass of both Comment and CommentNode or all should have same base
-
 case class CommentStream(
   val modhash: String,
   val after: String,
@@ -20,7 +16,7 @@ case class CommentStream(
   lazy val iterator = comments.iterator
 
   // def flatten()
-  //return itterator to flattened list
+  // TODO : return itterator to flattened list
 }
 
 

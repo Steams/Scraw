@@ -3,16 +3,10 @@ package com.steams.scraw.comments
 import com.steams.scraw.utils.apiObjects.BaseObject
 import com.steams.scraw.reddit.Reddit
 
-
-// case class CommentNode( id : String )
-
-
 case class LinkId(private val raw_id : String) {
 
   def id : String = toString
-
   override def toString = "t3_" + raw_id
-
 }
 
 trait Commentifiable {
@@ -29,7 +23,6 @@ case class CommentsLink (
   reddit : Reddit,
   depth : Int
 ) extends Commentifiable {
-  //extend itterable
 
   def get : CommentStream = CommentService.getMoreComments(link_id,children,reddit)
   def getFlattened : CommentStream = CommentService.getMoreCommentsFlat(link_id,children,reddit)
@@ -94,7 +87,8 @@ class CommentBuilder(){
   def author(parm : String) : CommentBuilder = {
     this.author = parm
     return this
-  } 
+  }
+
   var author_flair_css_class : String = _
   def author_flair_css_class(parm : String) : CommentBuilder = {
     this.author_flair_css_class = parm

@@ -11,7 +11,7 @@ private[scraw] trait CommentServiceStub {
 
 private[scraw] object CommentService extends JsonHandler {
 
-
+  //this exists for mock testint purposes
   var implementation : Option[CommentServiceStub] = None
   // def setImplementation( name :String) : Unit = {implementation = name }
 
