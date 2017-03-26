@@ -53,8 +53,8 @@ object scrawbot{
         printCount += 1
 
         x.replies match {
-          case Some(replies) => replies.map( r => printComments(r,indent+1))
-          case None =>
+          case Some(replies : List[Commentifiable]) => replies.foreach( r => printComments(r,indent+1))
+          case None => ()
         }
       }
       case link : CommentsLink => {

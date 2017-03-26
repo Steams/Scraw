@@ -64,16 +64,35 @@ println("Number of subscribers : " + cscq.subscribers )
 ````scala
     val test_post = Post("5l2xs1")
     println("Post title is : " + test_post.title )
-    val comments = test_post.comments().newest()
 
-    for(x <- comments){
-      x match {
-        case comment : Comment => println(" " + comment.author + " :> " + comment.body + " ")
-        case link : CommentsLink => println("Load more comments : " + link.name)
-      }
-    }
     //these are top level comments which each contain a list of replies
     //a function to flatten the tree will be provided
+    val comments = test_post.comments().newest()
+
+    comments.foreach( x => printComments(x,1))
+
+    //comments can be either comments or "more comments" links
+    //The Commentifiable base class abstracts over both of these
+    def printComments( comment : Commentifiable, indent : Int) : Unit = {
+      comment match {
+        case x : Comment => {
+          println("")
+          (1 to indent).foreach( _ => print("\t"))
+
+          println(" " + x.author + " :> " + x.body + "\n")
+
+          x.replies match {
+            case Some(replies : List[Commentifiable]) => replies.foreach( r => printComments(r,indent+1))
+            case None =>
+          }
+        }
+
+        case link : CommentsLink => {
+          println("loading comments ["+link.count+"]")
+          link.get.map( c => printComments(c,indent))
+        }
+      }
+    }
 
 ````
 
