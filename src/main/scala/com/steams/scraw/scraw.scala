@@ -20,6 +20,8 @@ package object scraw {
   type User = com.steams.scraw.users.User
   val User = com.steams.scraw.users.User
 
+  type Commentifiable = com.steams.scraw.comments.Commentifiable
+
   type Comment = com.steams.scraw.comments.Comment
   val Comment = com.steams.scraw.comments.Comment
 

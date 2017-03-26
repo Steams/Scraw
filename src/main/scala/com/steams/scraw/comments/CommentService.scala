@@ -5,11 +5,11 @@ import com.steams.scraw.utils.JsonHandler
 import com.steams.scraw.http.HttpService
 import com.steams.scraw.http.Endpoint
 
-trait CommentServiceStub {
+private[scraw] trait CommentServiceStub {
   def getMoreCommentsFlat( link_id : LinkId, children : List[String], reddit : Reddit) : CommentStream
 }
 
-object CommentService extends JsonHandler {
+private[scraw] object CommentService extends JsonHandler {
 
 
   var implementation : Option[CommentServiceStub] = None
@@ -28,7 +28,7 @@ object CommentService extends JsonHandler {
 
     val comments_list = comments_listing.property("children").children
 
-    val comments = CommentsFactory.buildCommentForrest(comments_list, link_id, reddit)
+    val comments = CommentsFactory.fromForrest(comments_list, link_id, reddit)
 
     val comment_stream = CommentStream(
       (comments_listing \ "modhash"),
@@ -39,7 +39,36 @@ object CommentService extends JsonHandler {
     return comment_stream
   }
 
-  private[scraw] def getMoreCommentsFlat( link_id : LinkId, children : List[String], reddit : Reddit) : CommentStream = {
+  def getMoreComments( link : LinkId, children : List[String], reddit : Reddit) : CommentStream = {
+
+    println("Getting more comments from service")
+
+    println(children.mkString(","))
+
+    val response_body = HttpService.post(
+      Endpoint.more_children,
+      Seq(
+        "link_id" -> link.toString,
+        "children" -> children.mkString(","),
+        "api_type" -> "json"
+      ),
+      reddit.access_token
+    )
+
+    val json = Jsonator.parse(response_body)
+
+    println(response_body)
+
+    val comments_json = (json \ "json" \ "data" \ "things").children
+
+    val comments = CommentsFactory.fromList(comments_json, link, reddit)
+
+    val comment_stream = CommentStream("","","",comments)
+
+    return comment_stream
+  }
+
+  def getMoreCommentsFlat( link_id : LinkId, children : List[String], reddit : Reddit) : CommentStream = {
 
     implementation match {
       case Some(x) => {

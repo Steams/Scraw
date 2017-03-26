@@ -6,7 +6,6 @@ import com.steams.scraw.reddit.Reddit
 
 // case class CommentNode( id : String )
 
-trait Commentifiable {}
 
 case class LinkId(private val raw_id : String) {
 
@@ -16,9 +15,14 @@ case class LinkId(private val raw_id : String) {
 
 }
 
+trait Commentifiable {
+  def name : String
+  def parent_id : String
+}
+
 case class CommentsLink (
   name : String,
-  parent : String,
+  parent_id: String,
   count : Int,
   children : List[String],
   link_id : LinkId,
@@ -27,11 +31,10 @@ case class CommentsLink (
 ) extends Commentifiable {
   //extend itterable
 
-  // def get : CommentStream = { CommentService.getMoreComments(link_id,children,reddit)}
+  def get : CommentStream = CommentService.getMoreComments(link_id,children,reddit)
   def getFlattened : CommentStream = CommentService.getMoreCommentsFlat(link_id,children,reddit)
 
 }
-
 
 case class Comment (
   override val id : String,

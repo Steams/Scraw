@@ -30,7 +30,7 @@ package JsonParsing {
     def children : List[JsonValue] = json.children.map { x : JValue => LiftJsonValue(x) }
     override def toString : String = json.extractOrElse[String]("")
     def toInt : Int = json.extractOrElse[Int](0)
-    def toBoolean : Boolean = json.extract[Boolean]
+    def toBoolean : Boolean = json.extractOrElse[Boolean](false)
     def toOptionalString : Option[String] = json.extract[Option[String]]
     def extract[T : Manifest] : T = json.extract[T]
   }

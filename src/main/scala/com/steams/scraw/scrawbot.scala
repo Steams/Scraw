@@ -4,7 +4,9 @@ import pureconfig.loadConfig
 
 object scrawbot{
 
-  def main(args: Array[String]){
+  var printCount = 0
+
+  def main(args: Array[String]) : Unit = {
 
     val config : InstanceConfig = loadConfig[InstanceConfig]("bot").get
 
@@ -30,42 +32,42 @@ object scrawbot{
     val user = User("lordtuts")
     println(user.name + "'s link karma is : " + user.link_karma)
 
-    val test_post = Post("5iv0hf")
+    // val test_post = Post("5iv0hf")
+    val test_post = Post("61hsy5")
     println("Post title is : " + test_post.title )
 
     val comments = test_post.comments()
 
+    comments.foreach( x => printComments(x,1))
+    println("Full Comment count : " + printCount)
 
-    for( x <- comments){
-      x match {
-        case comment : Comment => printComments(comment,1)
-        case link : CommentsLink => println("Load more comments : " + link.name)
-      }
-    }
   }
 
-  def printComments( comment : Comment, indent : Int) : Unit = {
-    println("")
-    for(x <- (1 to indent)){
-      print("\t")
-    }
-    println(" " + comment.author + " :> " + comment.body + " ")
-    println("")
+  def printComments( comment : Commentifiable, indent : Int) : Unit = {
+    comment match {
+      case x : Comment => {
+        println("")
+        for(x <- (1 to indent)){
+          print("\t")
+        }
+        println(" " + x.author + " :> " + x.body + " ")
+        println("")
+        printCount += 1
 
-    comment.replies match {
-      case Some(_) => for(x <- comment.replies.get){
-        x match {
-          case comment : Comment => printComments(comment,indent+1)
-          case link : CommentsLink => println("Load more comments : " + link.name)
+        x.replies match {
+          case Some(_) => for(reply <- x.replies.get){
+            printComments(reply,indent+1)
+          }
+          case None =>
         }
       }
-      // case Some(_) => for(x <- comment.replies.get){
-      //   x match {
-      //     case Comment => printComments(x,indent+1)
-      //     case MoreLink => for(p <- x.getComments){ printComments(x,indent+1)}
-      //   }
-      // }
-      case None =>
+      case x : CommentsLink => {
+        println("loading comments ["+x.count+"]")
+        for(comment <- x.get ){
+          printComments(comment,indent)
+        }
+      }
     }
+
   }
 }

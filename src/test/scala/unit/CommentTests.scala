@@ -77,7 +77,7 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
 
     val comments_json : JsonValue = parse(content)
 
-    val comments : List[Commentifiable] = CommentsFactory.buildCommentForrest(
+    val comments : List[Commentifiable] = CommentsFactory.fromForrest(
       List(comments_json),
       LinkId((comments_json \ "data" \ "link_id").toString),
       instance
@@ -99,7 +99,7 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
 
     val comments_json : List[JsonValue] = parse(content).children
 
-    val comments : List[Commentifiable] = CommentsFactory.buildCommentForrest(
+    val comments : List[Commentifiable] = CommentsFactory.fromForrest(
       comments_json,
       LinkId((comments_json(0) \ "data" \ "link_id").toString),
       instance)
@@ -144,7 +144,7 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
 
     val link_json : JsonValue = input_json(0) \ "data"
 
-    val comments : List[Commentifiable] = CommentsFactory.buildCommentForrest(
+    val comments : List[Commentifiable] = CommentsFactory.fromForrest(
       input_json,
       LinkId((link_json \ "testing_linkid").toString),
       instance
@@ -177,6 +177,23 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
     // compare the flat list structure with the json in file
     // then have the factory generate the nested structure
     // factory ultimately returns another CommentStream
+    /*
+     {
+     "kind": "more",
+     "data": {
+     "count": 11,
+     "parent_id": "t1_dd6l6zg",
+     "id": "dd6pg49",
+     "name": "t1_dd6pg49",
+     "children": [
+     "dd6pg49",
+     "dd7cwvl",
+     "dd72vlo",
+     "dd6xhjz"
+     ]
+     }
+     }
+     */
 
   }
 
@@ -187,5 +204,58 @@ class CommentSpec extends FlatSpec with Matchers with JsonHandler {
   it must "handle more links returned within more links" in {
 
   }
+
+  it must "fucking work" in {
+    val input_source = Source.fromURL(getClass.getResource("/anotherSingleMoreCommentsLink.json"))
+    val input_content = try { input_source.mkString } finally { input_source.close() }
+    println(input_content)
+    val input_json : List[JsonValue] = parse(input_content).children
+
+    val link_json : JsonValue = input_json(0) \ "data"
+
+    val comments : List[Commentifiable] = CommentsFactory.fromForrest(
+      input_json,
+      LinkId((link_json \ "testing_linkid").toString),
+      instance
+    )
+
+    comments.length should be {1}
+
+    val link : CommentsLink = comments(0).asInstanceOf[CommentsLink]
+
+    link.children.mkString(",") should be { link_json.property("children").children.mkString(",") }
+
+    val result_stream = link.get
+
+    result_stream.foreach( x => printComments(x,1))
+
+    def printComments( comment : Commentifiable, indent : Int) : Unit = {
+      comment match {
+        case x : Comment => {
+          println("")
+          for(x <- (1 to indent)){
+            print("\t")
+          }
+          println(" " + x.author + " :> " + x.body + " ")
+          println("")
+
+          x.replies match {
+            case Some(_) => for(reply <- x.replies.get){
+              printComments(reply,indent+1)
+            }
+            case None =>
+          }
+        }
+        case x : CommentsLink => {
+          println("loading comments ["+x.count+"]")
+          for(comment <- x.get ){
+            printComments(comment,indent)
+          }
+        }
+      }
+
+    }
+  }
+
 
 }
