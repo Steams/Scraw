@@ -1,7 +1,7 @@
 package  com.steams.scraw.posts
 
 import com.steams.scraw.reddit.Reddit
-import com.steams.scraw.utils.apiObjects.{BaseObject}
+import com.steams.scraw.utils.apiObjects.{ BaseObject, Votable }
 import com.steams.scraw.comments.CommentStreamSlice
 
 
@@ -37,7 +37,7 @@ case class Post(
     // val media : Object,
     // val media_embed : Object,
     // val likes : String, //this is NOT the score, best leave this out
-) extends BaseObject(id,name) {
+) extends BaseObject(id,name) with Votable {
 
   var instance : Option[Reddit] = None
 
@@ -45,7 +45,7 @@ case class Post(
     instance = Some(reddit)
   }
 
-  //coomments should be able to be flattened
+  //comments should be able to be flattened
   def comments() : CommentStreamSlice  = {
     return CommentStreamSlice(id,subreddit,instance.get)
   }

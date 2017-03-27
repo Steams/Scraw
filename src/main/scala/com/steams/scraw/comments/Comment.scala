@@ -1,6 +1,6 @@
 package com.steams.scraw.comments
 
-import com.steams.scraw.utils.apiObjects.BaseObject
+import com.steams.scraw.utils.apiObjects.{ BaseObject, Votable }
 import com.steams.scraw.reddit.Reddit
 
 case class LinkId(private val raw_id : String) {
@@ -56,7 +56,7 @@ case class Comment (
   val subreddit_id : String,
   val distinguished : String,
   val depth : Int
-) extends BaseObject(id,name) with Commentifiable{}
+) extends BaseObject(id,name) with Commentifiable with Votable{}
 
 
 object Comment {

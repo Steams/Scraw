@@ -39,7 +39,7 @@ object CommentsFactory extends JsonHandler {
             if(reply.property("kind").toString() == "t1") {
               buildCommentFromList(reply \ "data",potential_children,depth +1,link_id,reddit)
             } else {
-              buildCommentsLink(reply \ "data", depth + 1: Int, link_id: LinkId, reddit: Reddit)
+              buildCommentsLink(reply \ "data", depth + 1, link_id, reddit)
             }
           })
       }
@@ -60,7 +60,7 @@ object CommentsFactory extends JsonHandler {
       if(root.property("kind").toString() == "t1") {
           buildCommentFromList(root \ "data", potential_children, 0, link_id, reddit)
         } else {
-          buildCommentsLink(root \ "data", 0, link_id: LinkId, reddit: Reddit)
+          buildCommentsLink(root \ "data", 0, link_id, reddit)
         }
     }
 
