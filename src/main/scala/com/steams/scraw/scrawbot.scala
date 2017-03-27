@@ -48,13 +48,15 @@ object scrawbot{
 
   }
 
-  def printComments( comment : Commentifiable, indent : Int) : Unit = {
+  def printComments( comment : Commentifiable, indent : Int)(implicit instance: Reddit) : Unit = {
     comment match {
       case x : Comment => {
         println("")
         (1 to indent).foreach( _ => print("\t"))
 
         println(" " + x.author + " :> " + x.body + "\n")
+        println("Authors karma is " + x.user.link_karma)
+        println("Post title is" + x.post.title)
 
         printCount += 1
 

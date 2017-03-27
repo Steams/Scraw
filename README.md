@@ -51,6 +51,8 @@ println("Number of subscribers : " + cscq.subscribers )
     
     val single_post = Post("5l2xs1")
     println("Post title is : " + single_post.title )
+    single_post.upvote
+    single_post.save
    
 ```
 
@@ -80,6 +82,8 @@ println("Number of subscribers : " + cscq.subscribers )
           (1 to indent).foreach( _ => print("\t"))
 
           println(" " + x.author + " :> " + x.body + "\n")
+          x.clearvote
+          x.unsave
 
           x.replies match {
             case Some(replies : List[Commentifiable]) => replies.foreach( r => printComments(r,indent+1))

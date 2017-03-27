@@ -1,5 +1,7 @@
 package com.steams.scraw.comments
 
+import com.steams.scraw.users.User
+import com.steams.scraw.posts.Post
 import com.steams.scraw.utils.apiObjects.{ BaseObject, Votable }
 import com.steams.scraw.reddit.Reddit
 
@@ -56,7 +58,11 @@ case class Comment (
   val subreddit_id : String,
   val distinguished : String,
   val depth : Int
-) extends BaseObject(id,name) with Commentifiable with Votable{}
+) extends BaseObject(id,name) with Commentifiable with Votable{
+
+  def user()(implicit instance: Reddit) : User = User(author)
+  def post()(implicit instance: Reddit) : Post = Post(link_id.drop(3))
+}
 
 
 object Comment {
