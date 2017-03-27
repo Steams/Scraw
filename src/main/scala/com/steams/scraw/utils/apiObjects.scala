@@ -26,6 +26,13 @@ package apiObjects {
     def unsave()( implicit instance: Reddit) = HttpService.post(Endpoint.unsave, Seq("id" -> name), instance.access_token)
   }
 
+  trait Repliable {
+    def name : String
+
+    def reply(content: String)( implicit instance: Reddit) = HttpService.post(Endpoint.reply, Seq("api_type" -> "json", "text" -> content, "thing_id" -> name), instance.access_token)
+
+  }
+
 
   trait Created {
     def created : Long
