@@ -13,6 +13,9 @@ object Endpoint {
   val save = "https://oauth.reddit.com/api/save"
   val unsave = "https://oauth.reddit.com/api/unsave"
   val reply = "https://oauth.reddit.com/api/comment"
+  val delete = "https://oauth.reddit.com/api/del"
+  val report = "https://oauth.reddit.com/api/report"
+  val edit = "https://oauth.reddit.com/api/editusertext"
 
   def about_subreddit( name : String ) = { "https://oauth.reddit.com/r/"+name+"/about" }
 

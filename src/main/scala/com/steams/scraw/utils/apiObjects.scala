@@ -31,8 +31,18 @@ package apiObjects {
 
     def reply(content: String)( implicit instance: Reddit) = HttpService.post(Endpoint.reply, Seq("api_type" -> "json", "text" -> content, "thing_id" -> name), instance.access_token)
 
+    def report(reason: String, other_reason: String, rule_reason: String, site_reason: String)(implicit instance: Reddit) = HttpService.post(Endpoint.report, Seq("api_type" -> "json", "other_reason" -> other_reason, "reason" -> reason, "rule_reason" -> rule_reason, "site_reason" -> site_reason, "thing_id" -> name), instance.access_token)
+
   }
 
+  trait Creatable {
+    def name : String
+
+    def delete()(implicit instance: Reddit) = HttpService.post(Endpoint.delete, Seq("id" -> name), instance.access_token)
+
+    def edit(content: String)(implicit instance: Reddit) = HttpService.post(Endpoint.edit, Seq("api_type" -> "json","text" -> content,"thing_id" -> name), instance.access_token)
+
+  }
 
   trait Created {
     def created : Long

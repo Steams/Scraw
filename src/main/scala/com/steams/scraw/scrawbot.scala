@@ -36,7 +36,7 @@ object scrawbot{
     val test_post = Post("61tr7k")
     println("Post title is : " + test_post.title )
     // test_post.reply("Test comment number 2")
-    test_post.comments.foreach( x => x.asInstanceOf[Comment].reply("replying to all"))
+    test_post.comments.containing("all").foreach( x => x.edit(x.body++" edited yah") )
 
     // val comments = test_post.comments().matching(".*(r|R)ust.*".r)
 

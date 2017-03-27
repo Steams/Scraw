@@ -44,7 +44,6 @@ println("Number of subscribers : " + cscq.subscribers )
     
     //here the PostStreamSlice is implicitly converted into a PostStream...
     //...which extends Iterable and exposes an iterator to the retrieved posts
-    
     for(x <- posts){
       println(x.title + " : Score : " + x.score)
     }
@@ -75,17 +74,18 @@ println("Number of subscribers : " + cscq.subscribers )
 
     //comments can be either comments or "more comments" links
     //The Commentifiable base class abstracts over both of these
-    def printComments( comment : Commentifiable, indent : Int) : Unit = {
-      comment match {
-        case x : Comment => {
+
+    def printComments( x : Commentifiable, indent : Int) : Unit = {
+      x match {
+        case comment : Comment => {
           println("")
           (1 to indent).foreach( _ => print("\t"))
 
-          println(" " + x.author + " :> " + x.body + "\n")
-          x.clearvote
-          x.unsave
+          println(" " + comment.author + " :> " + comment.body + "\n")
+          comment.clearvote
+          comment.unsave
 
-          x.replies match {
+          comment.replies match {
             case Some(replies : List[Commentifiable]) => replies.foreach( r => printComments(r,indent+1))
             case None =>
           }
@@ -97,6 +97,45 @@ println("Number of subscribers : " + cscq.subscribers )
         }
       }
     }
+````
+
+###### Filtering Comments
+````scala
+    val test_post = Post("5l2xs1")
+    println("Post title is : " + test_post.title )
+
+    // You can filter comments by a string they contain or matching on a regex of your own
+    // These functions will load all the comments in the thread (including those hidden behind "more comments" links) and return them filtered by your criteria
+
+    test_post.comments.containing("explosion").foreach( x => printComments(x,1) )
+
+    val comments = test_post.comments().matching(".*(r|R)ust.*".r)
+````
+
+###### Reply to Comments and Posts
+````scala
+    val test_post = Post("5l2xs1")
+    
+    //remember, the reddit instance is implicitly passed here if it is in scope
+    // the actual function is reply(content: String)(implicit instance: Reddit)
+    test_post.reply("Test comment number 2")
+    test_post.comments.containing("normie").foreach( x => x.reply("REEEEEEEEEEEeEEE"))
+
+````
+
+###### Vote on,Delete,Edit,Report,Save Posts and Comments
+````scala
+    test_post.save
+
+    val comments = test_post.comments().matching(".*(r|R)ust.*".r).toList
+
+     for( comment <- comments) {
+       comment.upvote //or downvote or clearvote
+     }
+     
+     comments.filter( x => x.author == instance.username).foreach(x => x.edit(x.body ++ "\n added some text here"))
+
+     comments.filter( x => x.author == instance.username).contains("anime").foreach(x => x.delete)
 
 ````
 

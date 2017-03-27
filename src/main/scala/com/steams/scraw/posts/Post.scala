@@ -1,7 +1,7 @@
 package  com.steams.scraw.posts
 
 import com.steams.scraw.reddit.Reddit
-import com.steams.scraw.utils.apiObjects.{ BaseObject, Votable, Repliable}
+import com.steams.scraw.utils.apiObjects.{ BaseObject, Votable, Repliable, Creatable }
 import com.steams.scraw.comments.CommentStreamSlice
 
 
@@ -37,7 +37,7 @@ case class Post(
     // val media : Object,
     // val media_embed : Object,
     // val likes : String, //this is NOT the score, best leave this out
-) extends BaseObject(id,name) with Votable with Repliable {
+) extends BaseObject(id,name) with Votable with Repliable with Creatable {
 
   var instance : Option[Reddit] = None
 
