@@ -10,6 +10,8 @@ object Endpoint {
   val me = "https://www.reddit.com/api/v1/me"
   val more_children = "https://oauth.reddit.com/api/morechildren"
   val vote = "https://oauth.reddit.com/api/vote"
+  val save = "https://oauth.reddit.com/api/save"
+  val unsave = "https://oauth.reddit.com/api/unsave"
 
   def about_subreddit( name : String ) = { "https://oauth.reddit.com/r/"+name+"/about" }
 

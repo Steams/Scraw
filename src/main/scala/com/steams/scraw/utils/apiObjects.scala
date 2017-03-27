@@ -21,7 +21,11 @@ package apiObjects {
 
     def clearvote()( implicit instance: Reddit) = HttpService.post(Endpoint.vote, Seq("dir" -> "0", "id" -> name, "rank" -> "1"), instance.access_token)
 
+    def save()( implicit instance: Reddit) = HttpService.post(Endpoint.save, Seq("category" -> "", "id" -> name), instance.access_token)
+
+    def unsave()( implicit instance: Reddit) = HttpService.post(Endpoint.unsave, Seq("id" -> name), instance.access_token)
   }
+
 
   trait Created {
     def created : Long

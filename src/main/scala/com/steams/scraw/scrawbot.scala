@@ -35,6 +35,7 @@ object scrawbot{
     val test_post = Post("61orqk")
     println("Post title is : " + test_post.title )
     test_post.upvote
+    test_post.unsave
 
     val comments = test_post.comments().toList
 
