@@ -32,17 +32,16 @@ object scrawbot{
     val user = User("lordtuts")
     println(user.name + "'s link karma is : " + user.link_karma)
 
-    val test_post = Post("61orqk")
+    // val test_post = Post("61orqk")
+    val test_post = Post("61rh9j")
     println("Post title is : " + test_post.title )
-    test_post.upvote
-    test_post.unsave
 
-    val comments = test_post.comments().toList
+    val comments = test_post.comments().matching(".*(r|R)ust.*".r)
 
-    comments.foreach( x => printComments(x,1))
-    for( comment <- comments; if comment.isInstanceOf[Comment]) {
-      comment.asInstanceOf[Comment].clearvote
-    }
+    comments.foreach( x => println(x.author + " :> " + x.body + "\n"))
+    // for( comment <- comments; if comment.isInstanceOf[Comment]) {
+    //   comment.asInstanceOf[Comment].clearvote
+    // }
 
     println("Full Comment count : " + printCount)
 
@@ -55,8 +54,6 @@ object scrawbot{
         (1 to indent).foreach( _ => print("\t"))
 
         println(" " + x.author + " :> " + x.body + "\n")
-        println("Authors karma is " + x.user.link_karma)
-        println("Post title is" + x.post.title)
 
         printCount += 1
 
