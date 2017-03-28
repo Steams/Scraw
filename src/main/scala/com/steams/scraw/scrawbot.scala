@@ -35,8 +35,12 @@ object scrawbot{
     // val test_post = Post("61orqk")
     val test_post = Post("61tr7k")
     println("Post title is : " + test_post.title )
+
+    val test_sub = Subreddit("test")
+    // test_sub.selfPost("submission test","hey just testing",false)
+    test_sub.submitImage("image submit test","http://i.imgur.com/bxbF5nX.jpg",false,false)
     // test_post.reply("Test comment number 2")
-    test_post.comments.containing("all").foreach( x => x.edit(x.body++" edited yah") )
+    // test_post.comments.containing("all").foreach( x => x.edit(x.body++" edited yah") )
 
     // val comments = test_post.comments().matching(".*(r|R)ust.*".r)
 

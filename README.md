@@ -24,7 +24,7 @@ println("Your comment karma is : " + instance.owner.comment_karma)
 ###### Get Subreddit
 
 ```scala
-val cscq = Subreddit("cscareerquestions")  
+val cscq = Subreddit("cscareerquestions")
 //the Subreddit apply method takes a name and an implicit Reddit Instance declared above. 
 //It can also be called like this : Subreddit("cscareerquestions")(instance) if you'd rather not use implicits
 
@@ -37,7 +37,7 @@ println("Number of subscribers : " + cscq.subscribers )
 ```scala
     val poe = Subreddit("pathofexile")
 
-    val posts = poe.top().time("all").limit(2)
+    val posts = poe.top.time("all").limit(2)
     //posts here is of type PostStreamSlice, a type returned by Subreddit.top,Subreddit.newest etc.
     //this type exposes an interface for refining your query by count, limit, before, after etc.
     //the http request is not made until you attempt to call an Iterator method on the StreamSlice
@@ -68,7 +68,7 @@ println("Number of subscribers : " + cscq.subscribers )
 
     //these are top level comments which each contain a list of replies
     //a function to flatten the tree will be provided
-    val comments = test_post.comments().newest()
+    val comments = test_post.comments.newest
 
     comments.foreach( x => printComments(x,1))
 
@@ -105,11 +105,12 @@ println("Number of subscribers : " + cscq.subscribers )
     println("Post title is : " + test_post.title )
 
     // You can filter comments by a string they contain or matching on a regex of your own
-    // These functions will load all the comments in the thread (including those hidden behind "more comments" links) and return them filtered by your criteria
+    // These functions will load all the comments in the thread (including those hidden 
+    // behind "more comments" links) and return them filtered by your criteria
 
     test_post.comments.containing("explosion").foreach( x => printComments(x,1) )
 
-    val comments = test_post.comments().matching(".*(r|R)ust.*".r)
+    val comments = test_post.comments.matching(".*(r|R)ust.*".r)
 ````
 
 ###### Reply to Comments and Posts
@@ -127,7 +128,7 @@ println("Number of subscribers : " + cscq.subscribers )
 ````scala
     test_post.save
 
-    val comments = test_post.comments().matching(".*(r|R)ust.*".r).toList
+    val comments = test_post.comments.matching(".*(r|R)ust.*".r).toList
 
      for( comment <- comments) {
        comment.upvote //or downvote or clearvote

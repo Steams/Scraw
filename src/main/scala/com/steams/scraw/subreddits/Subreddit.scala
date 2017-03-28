@@ -35,6 +35,39 @@ case class Subreddit (
 
   var instance : Option[Reddit] = None
 
+  def submitLink(title: String, url : String, resubmit: Boolean, sendNotifications: Boolean)(implicit instance: Reddit) = SubredditService.submit(
+    title,
+    "",
+    url,
+    display_name,
+    "link",
+    resubmit,
+    sendNotifications,
+    instance
+  )
+
+  def submitImage(title: String, url : String, resubmit: Boolean, sendNotifications: Boolean)(implicit instance: Reddit) = SubredditService.submit(
+    title,
+    "",
+    url,
+    display_name,
+    "image",
+    resubmit,
+    sendNotifications,
+    instance
+  )
+
+  def selfPost(title: String, content: String, sendNotifications : Boolean)(implicit instance : Reddit) = SubredditService.submit(
+    title,
+    content,
+    "http://reddit.com",
+    display_name,
+    "self",
+    true,
+    sendNotifications,
+    instance
+  )
+
   private def setInstance(reddit : Reddit) = {
     instance = Some(reddit)
   }

@@ -16,20 +16,6 @@ object SubredditService extends JsonHandler {
   }
 
 
-
-  // posts.toStream #:: nextElements(posts.size,url)
-  /*nextElements(int,url) : Stream = {
-   make http request but have count += posts.size
-   }
-   */
-
-   /*
-   if the user did use a limit
-   then the stream just ends after the data
-   if the limit is very large, then cut the size in the query and make it a continuous stream as above
-   but have a cutoff point
-
-   */
   def getStream(endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : PostStream = {
 
     val response_body = HttpService.get(endpoint,reddit.access_token,params)
@@ -40,4 +26,26 @@ object SubredditService extends JsonHandler {
 
     return PostStream((jval \ "data" \ "modhash"), (jval \ "data" \ "after"), (jval \ "data" \ "before"), posts)
   }
+
+  def submit(title: String, content: String, url : String, sub_name : String, kind : String, resubmit : Boolean, sendreplies : Boolean, instance: Reddit) = {
+    val response_body = HttpService.post(
+      Endpoint.submit,
+      Seq("api_type" -> "json",
+          "extension" -> "json",
+          "flair_id" -> "",
+          "flair_text" -> "",
+          "kind" -> kind,
+          "location_name" -> "",
+          "resubmit" -> resubmit.toString,
+          "sendreplies" -> sendreplies.toString,
+          "sr" -> sub_name,
+          "text" -> content,
+          "title" -> title,
+          "url" -> url
+      ),
+      instance.access_token
+    )
+
+  }
+
 }
