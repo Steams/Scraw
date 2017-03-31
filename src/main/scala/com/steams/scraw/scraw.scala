@@ -27,7 +27,9 @@ package object scraw {
 
   type CommentsLink = com.steams.scraw.comments.CommentsLink
 
-  //you should make a base trait for streamSlice and Itterable
+  type Message = com.steams.scraw.messages.Message
+  val Message = com.steams.scraw.messages.Message
+
   implicit def StreamSliceToStream[A <: Iterable[Any] ]( slice : StreamSlice[A] ) : A =  slice.getStream()
 
 }

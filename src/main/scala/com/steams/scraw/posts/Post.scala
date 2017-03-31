@@ -46,9 +46,7 @@ case class Post(
   }
 
   //comments should be able to be flattened
-  def comments() : CommentStreamSlice  = {
-    return CommentStreamSlice(id,subreddit,instance.get)
-  }
+  def comments() : CommentStreamSlice = CommentStreamSlice(id,subreddit,instance.get)
 }
 
 object Post {

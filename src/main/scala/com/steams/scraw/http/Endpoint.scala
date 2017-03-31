@@ -7,7 +7,7 @@ object Sorting extends Enumeration {
 object Endpoint {
 
   val access_token = "https://www.reddit.com/api/v1/access_token"
-  val me = "https://www.reddit.com/api/v1/me"
+  val me = "https://oauth.reddit.com/api/v1/me"
   val more_children = "https://oauth.reddit.com/api/morechildren"
   val vote = "https://oauth.reddit.com/api/vote"
   val save = "https://oauth.reddit.com/api/save"
@@ -17,6 +17,14 @@ object Endpoint {
   val report = "https://oauth.reddit.com/api/report"
   val edit = "https://oauth.reddit.com/api/editusertext"
   val submit = "https://oauth.reddit.com/api/submit"
+  val block = "https://oauth.reddit.com/api/block"
+  val inbox = "https://oauth.reddit.com/message/inbox"
+  val messages_unread = "https://oauth.reddit.com/message/unread"
+  val messages_only = "https://oauth.reddit.com/message/messages"
+  val messages_mentions = "https://oauth.reddit.com/message/mentions"
+  val messages_post_replies = "https://oauth.reddit.com/message/selfreply"
+  val messages_comment_replies = "https://oauth.reddit.com/message/comments"
+  val messages_sent = "https://oauth.reddit.com/message/sent"
 
   def about_subreddit( name : String ) = { "https://oauth.reddit.com/r/"+name+"/about" }
 

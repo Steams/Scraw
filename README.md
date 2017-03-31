@@ -140,3 +140,31 @@ println("Number of subscribers : " + cscq.subscribers )
 
 ````
 
+
+###### Get private messages (messages,comment replies, post replies, sent, unread, mentions)
+````scala
+    //all messages
+    val my_messages = instance.owner.inbox
+    for(x <- my_messages){
+      println(x.body)
+    }
+
+    //unread messages
+    val unread_messages = instance.owner.unread
+    for(x <- unread_messages){
+      println(x.body)
+    }
+
+    //sent messages
+    val unread_messages = instance.owner.sent
+    for(x <- unread_messages){
+      println(x.body)
+    }
+
+    //etc...
+    val messages = instance.owner.post_replies
+    for(x <- messages){
+      println(x.body)
+    }
+
+````

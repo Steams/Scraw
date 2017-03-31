@@ -11,8 +11,7 @@ object scrawbot{
     val config : InstanceConfig = loadConfig[InstanceConfig]("bot").get
 
     implicit val instance : Reddit = Reddit(config)
-
-    // println("Your user name is : " + instance.owner.name)
+    println("Your user name is : " + instance.owner.name)
 
     val cscq = Subreddit("cscareerquestions")
     println(cscq.title)
@@ -26,19 +25,18 @@ object scrawbot{
     // this is implicitly converted from StreamSlice to PostStream when you try to use it like an itterable
     for(x <- posts){
       println(x.url + " : Score : " + x.score)
-      println("Comments should be at url : " + x.id)
     }
 
-    val user = User("lordtuts")
-    println(user.name + "'s link karma is : " + user.link_karma)
+    // val user = User("lordtuts")
+    // println(user.name + "'s link karma is : " + user.link_karma)
 
     // val test_post = Post("61orqk")
-    val test_post = Post("61tr7k")
-    println("Post title is : " + test_post.title )
+    // val test_post = Post("61tr7k")
+    // println("Post title is : " + test_post.title )
 
-    val test_sub = Subreddit("test")
+    // val test_sub = Subreddit("test")
     // test_sub.selfPost("submission test","hey just testing",false)
-    test_sub.submitImage("image submit test","http://i.imgur.com/bxbF5nX.jpg",false,false)
+    // test_sub.submitImage("image submit test","http://i.imgur.com/bxbF5nX.jpg",false,false)
     // test_post.reply("Test comment number 2")
     // test_post.comments.containing("all").foreach( x => x.edit(x.body++" edited yah") )
 
@@ -50,6 +48,11 @@ object scrawbot{
     // }
 
     // println("Full Comment count : " + printCount)
+
+    val my_messages = instance.owner.inbox.sent
+    for(x <- my_messages){
+      println(x.body)
+    }
 
   }
 
