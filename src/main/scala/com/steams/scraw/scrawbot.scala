@@ -61,6 +61,9 @@ object scrawbot{
       println(x.title)
     }
 
+    // poe.subscribe
+    // Subreddit("philosophy").unsubscribe
+
   }
 
   def printComments( comment : Commentifiable, indent : Int)(implicit instance: Reddit) : Unit = {

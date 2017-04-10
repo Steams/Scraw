@@ -21,16 +21,18 @@ println("Your user name is : " + instance.owner.name)
 println("Your comment karma is : " + instance.owner.comment_karma)
 ```
 
-###### Get Subreddit
+###### Get/Subscribe/Unsubscribe Subreddit
 
 ```scala
-val cscq = Subreddit("cscareerquestions")
-//the Subreddit apply method takes a name and an implicit Reddit Instance declared above. 
-//It can also be called like this : Subreddit("cscareerquestions")(instance) if you'd rather not use implicits
+  val cscq = Subreddit("cscareerquestions")
+  //the Subreddit apply method takes a name and an implicit Reddit Instance declared above. 
+  //It can also be called like this : Subreddit("cscareerquestions")(instance) if you'd rather not use implicits
 
-println(cscq.title)
-println("Number of subscribers : " + cscq.subscribers )
+  println(cscq.title)
+  println("Number of subscribers : " + cscq.subscribers )
 
+  cscq.subscribe
+  Subreddit("creepy").unsubscribe
 ```
 ###### Get Posts
 
@@ -170,3 +172,11 @@ println("Number of subscribers : " + cscq.subscribers )
     User("Gallowboob").send_pm("Subject: reposting","stop doing it")
 
 ````
+
+###### Get saved posts/messages
+```scala
+
+    for(x <- instance.owner.saved_posts.limit(2)){
+      println(x.title)
+    }
+```

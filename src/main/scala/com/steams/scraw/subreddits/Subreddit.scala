@@ -35,6 +35,10 @@ case class Subreddit (
 
   var instance : Option[Reddit] = None
 
+  def subscribe()(implicit instance : Reddit) = SubredditService.subscribe(display_name, instance)
+
+  def unsubscribe()(implicit instance : Reddit) = SubredditService.unsubscribe(display_name, instance)
+
   def submitLink(title: String, url : String, resubmit: Boolean, sendNotifications: Boolean)(implicit instance: Reddit) = SubredditService.submit(
     title,
     "",

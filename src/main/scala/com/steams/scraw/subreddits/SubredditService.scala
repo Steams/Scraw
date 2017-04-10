@@ -8,6 +8,14 @@ import com.steams.scraw.posts.{PostStream,Post}
 
 object SubredditService extends JsonHandler {
 
+  def subscribe(name : String, instance : Reddit) = {
+    HttpService.post(Endpoint.subscribe,Seq("action" -> "sub","sr_name" -> name), instance.access_token)
+  }
+
+  def unsubscribe(name : String, instance : Reddit) = {
+    HttpService.post(Endpoint.subscribe,Seq("action" -> "unsub","sr_name" -> name), instance.access_token)
+  }
+
   def getSubreddit(name : String, reddit : Reddit) : Subreddit = {
 
     val response_body = HttpService.get(Endpoint.about_subreddit(name),reddit.access_token)

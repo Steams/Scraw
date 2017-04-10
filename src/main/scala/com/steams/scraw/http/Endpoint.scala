@@ -11,6 +11,9 @@ object Endpoint {
 
   val more_children = "https://oauth.reddit.com/api/morechildren"
 
+  val subscribe = "https://oauth.reddit.com/api/subscribe"
+  val unsubscribe = "https://oauth.reddit.com/api/subscribe"
+
   val vote = "https://oauth.reddit.com/api/vote"
   val save = "https://oauth.reddit.com/api/save"
   val unsave = "https://oauth.reddit.com/api/unsave"
@@ -31,6 +34,7 @@ object Endpoint {
   val messages_post_replies = "https://oauth.reddit.com/message/selfreply"
   val messages_comment_replies = "https://oauth.reddit.com/message/comments"
   val messages_sent = "https://oauth.reddit.com/message/sent"
+
 
 
   def saved_posts(name : String) = "https://oauth.reddit.com/user/"+name+"/saved/?type=links"
