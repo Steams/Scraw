@@ -54,8 +54,12 @@ object scrawbot{
       println(x.body)
     }
 
-    val account = User("Steams")
-    account.send_pm("Testing PM's","This is a private message")
+    // val account = User("Steams")
+    // account.send_pm("Testing PM's","This is a private message")
+
+    for(x <- instance.owner.saved_posts.limit(2)){
+      println(x.title)
+    }
 
   }
 

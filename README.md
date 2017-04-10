@@ -124,7 +124,7 @@ println("Number of subscribers : " + cscq.subscribers )
 
 ````
 
-###### Vote on,Delete,Edit,Report,Save Posts and Comments
+###### Vote on,Delete,Edit,Report,Save/Unsave Posts and Comments
 ````scala
     test_post.save
 
@@ -141,7 +141,7 @@ println("Number of subscribers : " + cscq.subscribers )
 ````
 
 
-###### Get private messages (messages,comment replies, post replies, sent, unread, mentions)
+###### Get/Send private messages (messages,comment replies, post replies, sent, unread, mentions)
 ````scala
     //all messages
     val my_messages = instance.owner.inbox
@@ -166,5 +166,7 @@ println("Number of subscribers : " + cscq.subscribers )
     for(x <- messages){
       println(x.body)
     }
+    
+    User("Gallowboob").send_pm("Subject: reposting","stop doing it")
 
 ````

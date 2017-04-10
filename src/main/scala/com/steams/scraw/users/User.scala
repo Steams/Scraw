@@ -1,8 +1,10 @@
 package com.steams.scraw.users
 
+import com.steams.scraw.http.Endpoint
 import com.steams.scraw.utils.apiObjects.{BaseObject,Created}
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.messages.{MessageStreamSlice, MessageService}
+import com.steams.scraw.posts.PostStreamSlice
 
 case class User (
     override val id : String,
@@ -22,6 +24,8 @@ case class User (
 ) extends BaseObject(id,name) with Created {
 
   def inbox()(implicit instance: Reddit) : MessageStreamSlice = MessageStreamSlice(instance)
+
+  def saved_posts()(implicit instance: Reddit) : PostStreamSlice = PostStreamSlice(Endpoint.saved_posts(name),instance)
 
   def send_pm( subject: String, message : String )(implicit instance: Reddit) = MessageService.send_pm(subject,message,name,instance)
 

@@ -21,8 +21,9 @@ object SubredditService extends JsonHandler {
     val response_body = HttpService.get(endpoint,reddit.access_token,params)
 
     val jval = parse(response_body)
+    val posts_raw = jval \ "data" \ "children"
 
-    val posts = for(post <- (jval \ "data" \ "children").children) yield {(post \ "data").extract[Post]}
+    val posts = posts_raw.children.map(x => (x \ "data").extract[Post])
 
     return PostStream((jval \ "data" \ "modhash"), (jval \ "data" \ "after"), (jval \ "data" \ "before"), posts)
   }
