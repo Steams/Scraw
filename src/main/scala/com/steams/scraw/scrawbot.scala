@@ -54,6 +54,9 @@ object scrawbot{
       println(x.body)
     }
 
+    val account = User("Steams")
+    account.send_pm("Testing PM's","This is a private message")
+
   }
 
   def printComments( comment : Commentifiable, indent : Int)(implicit instance: Reddit) : Unit = {

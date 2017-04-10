@@ -18,6 +18,7 @@ object Endpoint {
   val edit = "https://oauth.reddit.com/api/editusertext"
   val submit = "https://oauth.reddit.com/api/submit"
   val block = "https://oauth.reddit.com/api/block"
+  val private_message = "https://oauth.reddit.com/api/compose"
   val inbox = "https://oauth.reddit.com/message/inbox"
   val messages_unread = "https://oauth.reddit.com/message/unread"
   val messages_only = "https://oauth.reddit.com/message/messages"
