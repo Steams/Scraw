@@ -15,6 +15,21 @@ private[scraw] object CommentService extends JsonHandler {
   var implementation : Option[CommentServiceStub] = None
   // def setImplementation( name :String) : Unit = {implementation = name }
 
+  def getStreamFromSaved( endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : CommentStream = {
+
+    val response_body = HttpService.get(endpoint,reddit.access_token,params)
+
+    val jval = parse(response_body)
+
+    val comments_raw = jval \ "data" \ "children"
+
+    val comments = CommentsFactory.fromForrest(comments_raw.children, LinkId(""), reddit)
+
+    val comment_stream = CommentStream("", "", "", comments)
+
+    return comment_stream
+  }
+
   def getStream( endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : CommentStream = {
 
     val response_body = HttpService.get(endpoint,reddit.access_token,params)

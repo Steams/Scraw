@@ -173,10 +173,14 @@ println("Your comment karma is : " + instance.owner.comment_karma)
 
 ````
 
-###### Get saved posts/messages
+###### Get saved posts/comments
 ```scala
 
     for(x <- instance.owner.saved_posts.limit(2)){
       println(x.title)
+    }
+
+    for(x <- instance.owner.saved_comments){
+      println(x.asInstanceOf[Comment].body)
     }
 ```

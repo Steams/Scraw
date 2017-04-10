@@ -1,5 +1,6 @@
 package com.steams.scraw.users
 
+import com.steams.scraw.comments.{ CommentService, CommentStream }
 import com.steams.scraw.http.Endpoint
 import com.steams.scraw.utils.apiObjects.{BaseObject,Created}
 import com.steams.scraw.reddit.Reddit
@@ -26,6 +27,8 @@ case class User (
   def inbox()(implicit instance: Reddit) : MessageStreamSlice = MessageStreamSlice(instance)
 
   def saved_posts()(implicit instance: Reddit) : PostStreamSlice = PostStreamSlice(Endpoint.saved_posts(name),instance)
+
+  def saved_comments()(implicit instance: Reddit) : CommentStream = CommentService.getStreamFromSaved(Endpoint.saved_comments(name),Map(),instance)
 
   def send_pm( subject: String, message : String )(implicit instance: Reddit) = MessageService.send_pm(subject,message,name,instance)
 

@@ -75,13 +75,13 @@ case class CommentStream(
 }
 
 
-case class CommentStreamSlice(val post_id : String, val subreddit : String, val reddit : Reddit )
+case class CommentStreamSlice(endpoint : String, val reddit : Reddit )
     extends StreamSlice[CommentStream]{
 
   val params : Map[String,Option[String]] = Map("sort" -> None)
 
   override def getStream() : CommentStream = {
-    CommentService.getStream(Endpoint.post_comment_stream(subreddit,post_id),params.toMap,reddit)
+    CommentService.getStream(endpoint,params.toMap,reddit)
   }
 
   def top() : CommentStreamSlice = {

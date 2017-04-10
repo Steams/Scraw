@@ -1,5 +1,6 @@
 package  com.steams.scraw.posts
 
+import com.steams.scraw.http.Endpoint
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.utils.apiObjects.{ BaseObject, Votable, Repliable, Creatable }
 import com.steams.scraw.comments.CommentStreamSlice
@@ -46,7 +47,7 @@ case class Post(
   }
 
   //comments should be able to be flattened
-  def comments() : CommentStreamSlice = CommentStreamSlice(id,subreddit,instance.get)
+  def comments() : CommentStreamSlice = CommentStreamSlice(Endpoint.post_comment_stream(subreddit,id),instance.get)
 }
 
 object Post {
