@@ -25,6 +25,8 @@ case class User (
     val created_utc : Long
 ) extends BaseObject(id,name) with Created {
 
+  val fullname = "t2_" + id
+
   def inbox()(implicit instance: Reddit) : MessageStreamSlice = MessageStreamSlice(instance)
 
   def submitted()(implicit instance: Reddit) : PostStreamSlice = PostStreamSlice(Endpoint.user_posts(name),instance)

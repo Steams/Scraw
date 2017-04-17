@@ -12,10 +12,13 @@ object UsersService extends JsonHandler {
       val response_body = HttpService.get(Endpoint.me,reddit.access_token)
       return parse(response_body).extract[User]
     }
-    case _ => {
 
+    case _ => {
       val response_body = HttpService.get(Endpoint.about_user(name),reddit.access_token)
-      return parse(response_body).\("data").extract[User]
+      println(parse(response_body))
+      return parse(response_body).property("data").extract[User]
     }
   }
+
+  def block(fullname : String, instance : Reddit) = HttpService.post(Endpoint.block, Seq("id" -> fullname), instance.access_token)
 }

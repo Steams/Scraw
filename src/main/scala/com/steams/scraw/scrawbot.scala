@@ -12,6 +12,7 @@ object scrawbot{
 
     implicit val instance : Reddit = Reddit(config)
     println("Your user name is : " + instance.owner.name)
+    println("Your id  is : " + instance.owner.id)
 
     val cscq = Subreddit("cscareerquestions")
     println(cscq.title)
@@ -49,33 +50,33 @@ object scrawbot{
 
     // println("Full Comment count : " + printCount)
 
-    val my_messages = instance.owner.inbox.sent
-    for(x <- my_messages){
-      println(x.body)
+    val messages = instance.owner.inbox
+    for(x <- messages){
+      x.block_author
     }
 
     // val account = User("Steams")
     // account.send_pm("Testing PM's","This is a private message")
 
-    for(x <- instance.owner.saved_posts.limit(2)){
-      println(x.title)
-    }
+    // for(x <- instance.owner.saved_posts.limit(2)){
+    //   println(x.title)
+    // }
 
-    for(x <- instance.owner.saved_comments){
-      println(x.asInstanceOf[Comment].body)
-    }
+    // for(x <- instance.owner.saved_comments){
+    //   println(x.asInstanceOf[Comment].body)
+    // }
 
-    for(x <- instance.owner.comments){
-      println(x.asInstanceOf[Comment].body)
-    }
+    // for(x <- instance.owner.comments){
+    //   println(x.asInstanceOf[Comment].body)
+    // }
 
-    for(x <- instance.owner.submitted){
-      println(x.title)
-    }
+    // for(x <- instance.owner.submitted){
+    //   println(x.title)
+    // }
 
-    for(x <- instance.owner.subscribed){
-      println(x.display_name)
-    }
+    // for(x <- instance.owner.subscribed){
+    //   println(x.display_name)
+    // }
 
     // poe.subscribe
     // Subreddit("philosophy").unsubscribe

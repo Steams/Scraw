@@ -143,12 +143,13 @@ println("Your comment karma is : " + instance.owner.comment_karma)
 ````
 
 
-###### Get/Send private messages (messages,comment replies, post replies, sent, unread, mentions)
+###### Get/Send/block private messages (messages,comment replies, post replies, sent, unread, mentions)
 ````scala
     //all messages
     val my_messages = instance.owner.inbox
     for(x <- my_messages){
       println(x.body)
+      x.block_author
     }
 
     //unread messages

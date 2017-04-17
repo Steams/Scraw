@@ -7,6 +7,8 @@ import com.steams.scraw.http.Endpoint
 
 private[scraw] object MessageService extends JsonHandler {
 
+  def block_author(fullname : String, instance : Reddit) = HttpService.post(Endpoint.block, Seq("id" -> fullname), instance.access_token)
+
   def send_pm( subject : String, message : String, name : String, instance : Reddit) : Unit = {
     val response_body = HttpService.post(
       Endpoint.private_message,

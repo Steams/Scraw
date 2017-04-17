@@ -1,7 +1,7 @@
 package com.steams.scraw.messages
 
 import com.steams.scraw.utils.apiObjects.{ BaseObject, Repliable, Creatable}
-// import com.steams.scraw.reddit.Reddit
+import com.steams.scraw.reddit.Reddit
 
 case class Message (
   override val id : String,
@@ -18,4 +18,7 @@ case class Message (
   val subreddit : String
 ) extends BaseObject(id,name) with Repliable with Creatable {
 
+  val fullname = "t4_" + id
+
+  def block_author()(implicit instance: Reddit) = MessageService.block_author(fullname,instance)
 }
