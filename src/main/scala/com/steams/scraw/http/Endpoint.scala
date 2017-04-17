@@ -40,6 +40,9 @@ object Endpoint {
   def saved_posts(name : String) = "https://oauth.reddit.com/user/"+name+"/saved/?type=links"
   def saved_comments(name : String) = "https://oauth.reddit.com/user/"+name+"/saved?type=comments"
 
+  def user_posts(name : String) = "https://oauth.reddit.com/user/"+name+"/submitted"
+  def user_comments(name : String) = "https://oauth.reddit.com/user/"+name+"/comments"
+
   def about_subreddit( name : String ) = { "https://oauth.reddit.com/r/"+name+"/about" }
 
   def subreddit_listing( name : String, sort : Sorting.Value = Sorting.Hot) : String = {

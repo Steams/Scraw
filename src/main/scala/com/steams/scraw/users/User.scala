@@ -26,9 +26,11 @@ case class User (
 
   def inbox()(implicit instance: Reddit) : MessageStreamSlice = MessageStreamSlice(instance)
 
-  def saved_posts()(implicit instance: Reddit) : PostStreamSlice = PostStreamSlice(Endpoint.saved_posts(name),instance)
+  def submitted()(implicit instance: Reddit) : PostStreamSlice = PostStreamSlice(Endpoint.user_posts(name),instance)
+  def comments()(implicit instance: Reddit) : CommentStream = CommentService.getStreamFromProfile(Endpoint.user_comments(name),Map(),instance)
 
-  def saved_comments()(implicit instance: Reddit) : CommentStream = CommentService.getStreamFromSaved(Endpoint.saved_comments(name),Map(),instance)
+  def saved_posts()(implicit instance: Reddit) : PostStreamSlice = PostStreamSlice(Endpoint.saved_posts(name),instance)
+  def saved_comments()(implicit instance: Reddit) : CommentStream = CommentService.getStreamFromProfile(Endpoint.saved_comments(name),Map(),instance)
 
   def send_pm( subject: String, message : String )(implicit instance: Reddit) = MessageService.send_pm(subject,message,name,instance)
 

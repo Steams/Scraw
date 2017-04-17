@@ -65,6 +65,14 @@ object scrawbot{
       println(x.asInstanceOf[Comment].body)
     }
 
+    for(x <- instance.owner.comments){
+      println(x.asInstanceOf[Comment].body)
+    }
+
+    for(x <- instance.owner.submitted){
+      println(x.title)
+    }
+
     // poe.subscribe
     // Subreddit("philosophy").unsubscribe
 

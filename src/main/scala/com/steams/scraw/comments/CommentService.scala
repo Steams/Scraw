@@ -15,7 +15,7 @@ private[scraw] object CommentService extends JsonHandler {
   var implementation : Option[CommentServiceStub] = None
   // def setImplementation( name :String) : Unit = {implementation = name }
 
-  def getStreamFromSaved( endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : CommentStream = {
+  def getStreamFromProfile( endpoint : String, params : Map[String,Option[String]], reddit : Reddit) : CommentStream = {
 
     val response_body = HttpService.get(endpoint,reddit.access_token,params)
 
