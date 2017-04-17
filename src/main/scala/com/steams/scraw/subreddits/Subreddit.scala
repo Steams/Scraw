@@ -9,7 +9,7 @@ import com.steams.scraw.posts.PostStreamSlice
 case class Subreddit (
     override val id : String,
     override val name : String,
-    val accounts_active : Int,
+    val accounts_active : Option[Int],
     val comment_score_hide_mins : Int,
     val description : String,
     val description_html : String,

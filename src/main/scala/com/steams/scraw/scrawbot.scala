@@ -73,6 +73,10 @@ object scrawbot{
       println(x.title)
     }
 
+    for(x <- instance.owner.subscribed){
+      println(x.display_name)
+    }
+
     // poe.subscribe
     // Subreddit("philosophy").unsubscribe
 

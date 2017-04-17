@@ -57,4 +57,10 @@ object SubredditService extends JsonHandler {
 
   }
 
+  def getSubscribed(instance : Reddit) : List[Subreddit] = {
+    val response_body = HttpService.get(Endpoint.subscribed_subreddits,instance.access_token)
+
+    (parse(response_body) \ "data" \ "children").children.map( x => (x \ "data").extract[Subreddit])
+  }
+
 }

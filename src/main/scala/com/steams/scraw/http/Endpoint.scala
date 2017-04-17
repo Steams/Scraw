@@ -35,6 +35,8 @@ object Endpoint {
   val messages_comment_replies = "https://oauth.reddit.com/message/comments"
   val messages_sent = "https://oauth.reddit.com/message/sent"
 
+  val subscribed_subreddits = "https://oauth.reddit.com/subreddits/mine/subscriber?limit=1000"
+
 
 
   def saved_posts(name : String) = "https://oauth.reddit.com/user/"+name+"/saved/?type=links"

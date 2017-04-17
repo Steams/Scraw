@@ -173,7 +173,7 @@ println("Your comment karma is : " + instance.owner.comment_karma)
 
 ````
 
-###### Get saved/submitted posts/comments
+###### Get saved/submitted posts/comments and subscribed subreddits
 ```scala
 
     for(x <- instance.owner.saved_posts.limit(2)){
@@ -190,5 +190,9 @@ println("Your comment karma is : " + instance.owner.comment_karma)
 
     for(x <- instance.owner.submitted.count(10)){
       println(x.title)
+    }
+
+    for(x <- instance.owner.subscribed){
+      println(x.display_name)
     }
 ```

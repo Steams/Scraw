@@ -6,6 +6,7 @@ import com.steams.scraw.utils.apiObjects.{BaseObject,Created}
 import com.steams.scraw.reddit.Reddit
 import com.steams.scraw.messages.{MessageStreamSlice, MessageService}
 import com.steams.scraw.posts.PostStreamSlice
+import com.steams.scraw.subreddits.{SubredditService, Subreddit}
 
 case class User (
     override val id : String,
@@ -32,8 +33,9 @@ case class User (
   def saved_posts()(implicit instance: Reddit) : PostStreamSlice = PostStreamSlice(Endpoint.saved_posts(name),instance)
   def saved_comments()(implicit instance: Reddit) : CommentStream = CommentService.getStreamFromProfile(Endpoint.saved_comments(name),Map(),instance)
 
-  def send_pm( subject: String, message : String )(implicit instance: Reddit) = MessageService.send_pm(subject,message,name,instance)
+  def subscribed()(implicit instance: Reddit) : List[Subreddit] = SubredditService.getSubscribed(instance)
 
+  def send_pm( subject: String, message : String )(implicit instance: Reddit) = MessageService.send_pm(subject,message,name,instance)
 }
 
 object User {
